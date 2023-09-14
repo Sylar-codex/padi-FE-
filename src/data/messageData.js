@@ -1,10 +1,10 @@
-import Ravi from "../assets/icons/Messages/Ravi.svg";
-import Maria from "../assets/icons/Maria.svg";
-import Karen from "../assets/icons/Messages/Karen.svg";
-import Prince from "../assets/icons/Messages/Prince.svg";
-import Yejide from "../assets/icons/Messages/Yejide.svg";
-import Alex from "../assets/icons/Messages/Alex.svg";
-import Joanna from "../assets/icons/Messages/Joanna.svg";
+import Ravi from "../assets/contacts-img/Ravi.svg";
+import Mia from "../assets/contacts-img/Mia.svg";
+import Karen from "../assets/contacts-img/Karen.svg";
+import Prince from "../assets/contacts-img/Prince.svg";
+import Yejide from "../assets/contacts-img/Yejide.svg";
+import Alex from "../assets/contacts-img/Alex.svg";
+import Joanna from "../assets/contacts-img/Joanna.svg";
 
 export const chatPreview = [
   {
@@ -17,11 +17,11 @@ export const chatPreview = [
   },
   {
     id: 2,
-    name: "Maria Caruso",
+    name: "Mia Caruso",
     messages:
-      "Maria: I'm looking forward to it too. I believe in you and your ability to m...",
+      "Mia: I'm looking forward to it too. I believe in you and your ability to m...",
     timeStamp: "12 hours ago",
-    img: Maria,
+    img: Mia,
   },
   {
     id: 3,

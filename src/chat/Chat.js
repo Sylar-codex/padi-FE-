@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { chatPreview } from "../data/messageData";
 import coacheeProfile from "../assets/images/Avatar2.svg";
-import Ravi from "../assets/Messages/Ravi.svg";
-import Maria from "../assets/Messages/Maria.svg";
-import Karen from "../assets/Messages/Karen.svg";
+import Ravi from "../assets/contacts-img/Ravi.svg";
+import Mia from "../assets/contacts-img/Mia.svg";
+import Karen from "../assets/contacts-img/Karen.svg";
 import paperAirplane from "../assets/icons/paper-airplane.svg";
 import hourGlass from "../assets/icons/hour-glass.svg";
 import pinkPlay from "../assets/icons/pink-play.svg";
@@ -12,6 +12,7 @@ import lockClosed from "../assets/icons/lock-closed.svg";
 
 function Chat() {
   const [id, setId] = useState(0);
+  const [newMessage, setNewMessage] = useState(false);
 
   return (
     <div>
@@ -185,12 +186,10 @@ function Chat() {
                 <div className="flex border-b border-gray-20 items-center justify-between p-3 bg-white">
                   <div className="flex space-x-2">
                     <div>
-                      <img src={Maria} alt="avatar" />
+                      <img src={Mia} alt="avatar" />
                     </div>
                     <div>
-                      <p className="text-gray-100 font-semibold">
-                        Maria Caruso
-                      </p>
+                      <p className="text-gray-100 font-semibold">Mia Caruso</p>
                       <p className="text-gray-90 text-sm">
                         Next session: 23 Jan, 2023 @ 12:30PM
                       </p>
@@ -215,7 +214,7 @@ function Chat() {
                     <div className="w-2/3 flex justify-center items-center space-x-2">
                       <div className="w-11/12">
                         <p className="bg-primary-50 py-3 px-5 text-gray-90">
-                          Hello Maria, I hope you're doing well. I just booked a
+                          Hello Mia, I hope you're doing well. I just booked a
                           session with you and I'm looking forward to it. Are
                           there any specific things you'd like me to prepare for
                           our session or is there anything in particular that
@@ -238,7 +237,7 @@ function Chat() {
                   <div className="flex justify-start mt-2">
                     <div className="w-2/3 flex justify-center items-center space-x-2">
                       <div className="w-1/12">
-                        <img className="w-full" src={Maria} alt="avatar" />
+                        <img className="w-full" src={Mia} alt="avatar" />
                       </div>
                       <div className="w-11/12">
                         <p className="bg-gray-20 py-3 px-5 text-gray-90">
@@ -256,7 +255,7 @@ function Chat() {
                   <div className="flex justify-start mt-2">
                     <div className="w-2/3 flex justify-center items-center space-x-2">
                       <div className="w-1/12">
-                        <img className="w-full" src={Maria} alt="avatar" />
+                        <img className="w-full" src={Mia} alt="avatar" />
                       </div>
                       <div className="w-11/12">
                         <div className="bg-gray-20 py-4  px-3">
@@ -327,7 +326,7 @@ function Chat() {
                       placeholder="Start a conversation!"
                     />
                   </div>
-                  <div className="flex space-x-px items-center justify-center bg-inactive text-white h-14 rounded-xl p-3 w-1/5">
+                  <div className="flex space-x-px items-center justify-center hover:cursor-pointer bg-inactive text-white h-14 rounded-xl p-3 w-1/5">
                     <div>
                       <img src={paperAirplane} alt="paper-airplane" />
                     </div>
@@ -455,7 +454,7 @@ function Chat() {
                       placeholder="Start a conversation!"
                     />
                   </div>
-                  <div className="flex space-x-px items-center justify-center bg-inactive text-white h-14 rounded-xl p-3 w-1/5">
+                  <div className="flex space-x-px items-center hover:cursor-pointer justify-center bg-inactive text-white h-14 rounded-xl p-3 w-1/5">
                     <div>
                       <img src={paperAirplane} alt="paper-airplane" />
                     </div>
@@ -479,7 +478,7 @@ function Chat() {
                   onClick={() => {
                     setNewMessage(true);
                   }}
-                  className="bg-active text-white rounded-full p-6 h-10 w-40 flex items-center justify-center mt-4"
+                  className="bg-active hover:cursor-pointer text-white rounded-full p-6 h-10 w-40 flex items-center justify-center mt-4"
                 >
                   New Message
                 </button>
