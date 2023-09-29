@@ -9,6 +9,7 @@ import hourGlass from "../assets/icons/hour-glass.svg";
 import pinkPlay from "../assets/icons/pink-play.svg";
 import externalLink from "../assets/icons/external-link.svg";
 import lockClosed from "../assets/icons/lock-closed.svg";
+import Websocket from "../websocket/Websocket";
 
 function Chat() {
   const [id, setId] = useState(0);
@@ -17,6 +18,7 @@ function Chat() {
   return (
     <div>
       <div>
+        <Websocket />
         <div className="border border-gray-20 shadow-xl rounded-xl flex mt-6">
           {/* chat preview */}
           <div className="w-2/5 h-full sticky top-0 z-10">
