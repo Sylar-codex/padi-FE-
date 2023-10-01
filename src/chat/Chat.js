@@ -23,9 +23,7 @@ function Chat() {
           {/* chat preview */}
           <div className="w-2/5 h-full sticky top-0 z-10">
             <div className="flex items-center space-x-3 p-3">
-              <h2 className="text-grray-100 font-semibold">
-                Active Participant
-              </h2>
+              <h2 className="text-grray-100 font-semibold">Active Contacts</h2>
               <p className="w-5 h-5 p-4 rounded-full text-gray-70 flex items-center justify-center bg-gray-10">
                 {chatPreview.length}
               </p>
@@ -33,16 +31,16 @@ function Chat() {
             {/* need to make this fixed when it is at the top of the page the element below it need to be scrollable as well */}
             <div className="bg-gray-10 text-gray-80 p-3 text-sm">
               <p>
-                The chats here are from only people you are scheduled for
-                sessions with.
+                The chats here are from only people you have been in
+                communication with recently
               </p>
             </div>
             {chatPreview.length < 1 && (
               <div className="py-20 px-10 border-r-2 border-gray-5 text-center pb-96">
                 <h2 className="text-gray-100 font-medium">No chats</h2>
                 <p className="text-gray-90 mt-2 text-sm">
-                  When you schedule a session with someone, they will appear
-                  here.
+                  Whenever you send a message to any of your contact, It'll
+                  appear here
                 </p>
               </div>
             )}
@@ -470,11 +468,11 @@ function Chat() {
                   <img src={hourGlass} alt="hour-glass" />
                 </div>
                 <h2 className="text-gray-100 font-semibold mt-2">
-                  Limit chat for scheduled participants
+                  Send a message to a contact
                 </h2>
                 <p className="text-gray-90 text-sm text-center mt-2 leading-6">
-                  You can only chat with participants who scheduled to have
-                  sessions with you. Each chat is set to a limited time
+                  You can only chat with a contact you have sent a message to or
+                  you have received message from
                 </p>
                 <button
                   onClick={() => {
