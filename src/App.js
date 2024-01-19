@@ -10,7 +10,7 @@ function App() {
     <Fragment>
       <Routes>
         <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login/*" element={<Login />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
     </Fragment>
