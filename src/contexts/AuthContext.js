@@ -9,6 +9,8 @@ const initialState = {
   user: null,
   token: localStorage.getItem("authToken"),
   isAuthenticated: false,
+  isLoading: false,
+  isSubmitting: false,
 };
 
 const AuthProvider = ({ children }) => {

@@ -6,6 +6,15 @@ function Websocket() {
   const [username, setUsername] = useState("");
   const [messageHistory, setMessageHistory] = useState([]);
 
+  const token = localStorage.getItem("authToken");
+
+  useWebSocket(token ? "ws://127.0.0.1:8000/" : null, {
+    queryParams: {
+      token: token,
+    },
+    // rest of the settings
+  });
+
   const { sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/");
 
   const { readyState } = useWebSocket("ws://127.0.0.1:8000/", {

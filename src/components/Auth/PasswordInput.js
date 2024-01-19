@@ -2,16 +2,27 @@ import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import PasswordField from "../inputs/PasswordField";
 import useInputState from "../../hooks/inputHook";
+import useAuthState from "../../hooks/authHook";
 
 function PasswordInput() {
   const navigate = useNavigate();
   const [password, setPassword] = useInputState();
+  const { login } = useAuthState();
+
+  const username = "sylarvi";
+
+  const handleSubmit = () => {
+    if (password !== "") {
+      login({ username, password });
+      navigate("/signup");
+    }
+  };
   return (
     <div>
       <div className="w-1/2 mx-auto">
         <div className="w-full p-3 h-14 border border-gray-30 rounded-lg my-3 cursor-text">
           {/* I will use session storage later */}
-          <p>{"handle"}</p>
+          <p>{username}</p>
         </div>
         <div className="space-y-3">
           <PasswordField
@@ -19,7 +30,7 @@ function PasswordInput() {
             id={"password"}
             placeHolder={"Password"}
             handleChange={setPassword}
-            value={password}
+            value={password || ""}
             label={"Password"}
             required={true}
           />
@@ -45,7 +56,7 @@ function PasswordInput() {
       <div className="flex justify-center mt-8">
         <button
           onClick={() => {
-            navigate("/");
+            handleSubmit();
           }}
           className="bg-primary-50 text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
         >
