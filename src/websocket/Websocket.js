@@ -8,16 +8,24 @@ function Websocket() {
 
   const token = localStorage.getItem("authToken");
 
-  useWebSocket(token ? "ws://127.0.0.1:8000/" : null, {
-    queryParams: {
-      token: token,
-    },
-    // rest of the settings
-  });
+  console.log(token);
+
+  // const {readyState} = useWebSocket(token ? "ws://127.0.0.1:8000/chat" : null, {
+  //   queryParams: {
+  //     token: token,
+  //   },
+  // });
+
+  // console.log("check", checkSocket);
+
+  // useWebSocket(token ? `ws://127.0.0.1:8000/?token=${token}` : null);
 
   const { sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/");
 
-  const { readyState } = useWebSocket("ws://127.0.0.1:8000/", {
+  const { readyState } = useWebSocket(token ? "ws://127.0.0.1:8000/" : null, {
+    queryParams: {
+      token: token,
+    },
     onOpen: () => {
       console.log("Connected!");
     },
