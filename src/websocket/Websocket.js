@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
+import { useParams } from "react-router-dom";
 
 function Websocket() {
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
   const [messageHistory, setMessageHistory] = useState([]);
+
+  const { conversationName } = useParams();
 
   const token = localStorage.getItem("authToken");
 
@@ -20,30 +23,33 @@ function Websocket() {
 
   // useWebSocket(token ? `ws://127.0.0.1:8000/?token=${token}` : null);
 
-  const { sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/");
+  // const { sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/");
 
-  const { readyState } = useWebSocket(token ? "ws://127.0.0.1:8000/" : null, {
-    queryParams: {
-      token: token,
-    },
-    onOpen: () => {
-      console.log("Connected!");
-    },
-    onClose: () => {
-      console.log("Disconnected!");
-    },
-    onMessage: (e) => {
-      const data = JSON.parse(e.data);
-      switch (data.type) {
-        case "chat_message_echo":
-          setMessageHistory(...messageHistory, data);
-          break;
-        default:
-          console.log("Unknown message type!");
-          break;
-      }
-    },
-  });
+  const { readyState, sendJsonMessage } = useWebSocket(
+    token ? `ws://127.0.0.1:8000/${conversationName}` : null,
+    {
+      queryParams: {
+        token: token,
+      },
+      onOpen: () => {
+        console.log("Connected!");
+      },
+      onClose: () => {
+        console.log("Disconnected!");
+      },
+      onMessage: (e) => {
+        const data = JSON.parse(e.data);
+        switch (data.type) {
+          case "chat_message_echo":
+            setMessageHistory(...messageHistory, data);
+            break;
+          default:
+            console.log("Unknown message type!");
+            break;
+        }
+      },
+    }
+  );
 
   function handleSubmit() {
     sendJsonMessage({

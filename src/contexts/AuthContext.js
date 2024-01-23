@@ -7,6 +7,7 @@ const { Provider } = AuthContext;
 
 const initialState = {
   user: null,
+  users: [{}],
   token: localStorage.getItem("authToken"),
   isAuthenticated: false,
   isLoading: false,
@@ -14,7 +15,7 @@ const initialState = {
 };
 
 const AuthProvider = ({ children }) => {
-  const [auth, dispatchAuth] = useReducer(initialState, authReducer);
+  const [auth, dispatchAuth] = useReducer(authReducer, initialState);
   return <Provider value={{ auth, dispatchAuth }}>{children}</Provider>;
 };
 
