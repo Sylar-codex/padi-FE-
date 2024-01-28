@@ -20,7 +20,7 @@ function authReducer(state, action) {
         user: action.payload,
       };
     case LOGIN_SUCCESS:
-      localStorage.setItem("AuthToken", action.payload.token);
+      localStorage.setItem("authToken", action.payload.token);
       return {
         ...state,
         ...action.payload,
@@ -35,9 +35,12 @@ function authReducer(state, action) {
     case USERS_LOADED:
       return {
         ...state,
-        isLoading: false,
         users: action.payload,
+        isLoading: false,
+        isAuthenticated: true,
       };
+    default:
+      return state;
   }
 }
 

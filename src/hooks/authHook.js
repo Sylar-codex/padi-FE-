@@ -1,7 +1,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { handleApiCall } from "../services/httpConfig";
-import { LOGIN_SUCCESS, USER_LOADED, USER_LOADING } from "../actions/type";
+import {
+  LOGIN_SUCCESS,
+  USERS_LOADED,
+  USERS_LOADING,
+  USER_LOADED,
+  USER_LOADING,
+} from "../actions/type";
 
 const useAuthState = () => {
   const { auth, dispatchAuth } = useContext(AuthContext);
@@ -10,7 +16,6 @@ const useAuthState = () => {
     try {
       dispatchAuth({ type: USER_LOADING });
       const response = await handleApiCall("api/auth/login", "POST", payload);
-      console.log(response.data);
       dispatchAuth({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (err) {
       console.log(err);
@@ -31,7 +36,9 @@ const useAuthState = () => {
   // get all users
   const loadUsers = async () => {
     try {
-      // logic goes here
+      dispatchAuth({ type: USERS_LOADING });
+      const response = await handleApiCall("api/auth/get_all_users", "GET");
+      dispatchAuth({ type: USERS_LOADED, payload: response.data });
     } catch (err) {
       console.log(err);
     }
