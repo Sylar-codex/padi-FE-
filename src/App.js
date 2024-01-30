@@ -17,8 +17,8 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login/*" element={<Login />} />
-        <Route path="/chat/:conversationName" element={<Chat />} />
-        <Route path="/chat" element={<DisplayChat />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat/message" element={<DisplayChat />} />
       </Routes>
     </Fragment>
   );
