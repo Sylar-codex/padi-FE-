@@ -5,13 +5,13 @@ function messageReducer(state, action) {
     case last_50_messages:
       return {
         ...state,
-        messasge: action.payload,
+        messages: action.payload.messages,
       };
 
     case chat_message_echo:
       return {
         ...state,
-        message: [...state.message, action.payload],
+        messages: [...state.messages, action.payload.message],
       };
 
     default:

@@ -17,7 +17,7 @@ function ChatPreview({ id, setId, setConversationName }) {
   };
 
   const otherUsers = users.filter((otherUser) => {
-    return user.username !== otherUser.username;
+    return user?.username !== otherUser.username;
   });
 
   return (

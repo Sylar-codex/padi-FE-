@@ -6,12 +6,12 @@ const MessageContext = createContext(null);
 const { Provider } = MessageContext;
 
 const initialState = {
-  message: [],
+  messages: [],
 };
 
 const MessageProvider = ({ children }) => {
-  const [message, dispatchMessage] = useReducer(messageReducer, initialState);
-  return <Provider value={{ message, dispatchMessage }}>{children}</Provider>;
+  const [messages, dispatchMessages] = useReducer(messageReducer, initialState);
+  return <Provider value={{ messages, dispatchMessages }}>{children}</Provider>;
 };
 
 export { MessageContext, MessageProvider };

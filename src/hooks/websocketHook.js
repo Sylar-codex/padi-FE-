@@ -1,48 +1,41 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { MessageContext } from "../contexts/MessageContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const useWebSocketHook = () => {
   const [conversationName, setConversationName] = useState("");
 
-  const { message, dispatchMessage } = useContext(MessageContext);
+  const { messages, dispatchMessages } = useContext(MessageContext);
+
+  const [isReady, setIsReady] = useState(false);
+
+  const ws = useRef(null);
 
   const token = localStorage.getItem("authToken");
 
-  const { readyState, sendJsonMessage } = useWebSocket(
-    token ? `ws://127.0.0.1:8000/${conversationName}/` : null,
-    {
-      queryParams: {
-        token: token,
-      },
-      onOpen: () => {
-        console.log("Connected!");
-      },
-      onClose: () => {
-        console.log("Disconnected!");
-      },
-      onMessage: (e) => {
-        const data = JSON.parse(e.data);
+  const url = token
+    ? `ws://127.0.0.1:8000/${conversationName}/?token=${token}`
+    : null;
 
-        dispatchMessage({ type: data.type, payload: data.message });
-      },
-    }
-  );
+  useEffect(() => {
+    const socket = new WebSocket(url);
 
-  const connectionStatus = {
-    [ReadyState.CONNECTING]: "Connecting",
-    [ReadyState.OPEN]: "Open",
-    [ReadyState.CLOSING]: "Closing",
-    [ReadyState.CLOSED]: "Closed",
-    [ReadyState.UNINSTANTIATED]: "Uninstantiated",
-  }[readyState];
+    socket.onopen = () => setIsReady(true);
+    socket.onclose = () => setIsReady(false);
+    socket.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      dispatchMessages({ type: data.type, payload: data });
+    };
 
-  return {
-    connectionStatus,
-    sendJsonMessage,
-    message,
-    setConversationName,
-  };
+    ws.current = socket;
+
+    return () => {
+      socket.close();
+    };
+  }, [conversationName]);
+
+  return [isReady, messages, setConversationName, conversationName, ws.current];
 };
 
 export default useWebSocketHook;

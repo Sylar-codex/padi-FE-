@@ -25,7 +25,7 @@ function UsernameInput() {
       <div className="flex justify-center mt-8">
         <button
           onClick={() => {
-            navigate("/login/password");
+            navigate(`/login/password/${username}`);
           }}
           className="bg-primary-50 text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
         >
