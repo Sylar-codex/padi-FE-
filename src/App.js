@@ -4,8 +4,8 @@ import { Routes, Route } from "react-router-dom";
 import Signup from "./accounts/Signup";
 import Login from "./accounts/Login";
 import Chat from "./chat/Chat";
-import DisplayChat from "./chat/DisplayChat";
 import useAuthState from "./hooks/authHook";
+import Conversations from "./chat/Conversations";
 
 function App() {
   const { loadUser, auth } = useAuthState();
@@ -18,7 +18,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login/*" element={<Login />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/chat/message" element={<DisplayChat />} />
+        <Route path="/conversations" element={<Conversations />} />
       </Routes>
     </Fragment>
   );

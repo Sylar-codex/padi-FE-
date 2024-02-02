@@ -35,7 +35,9 @@ const useWebSocketHook = () => {
     };
   }, [conversationName]);
 
-  return [isReady, messages, setConversationName, conversationName, ws.current];
+  const current = ws.current;
+
+  return { isReady, messages, setConversationName, conversationName, current };
 };
 
 export default useWebSocketHook;

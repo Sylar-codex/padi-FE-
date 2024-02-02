@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { handleApiCall } from "../services/httpConfig";
 import {
@@ -11,6 +11,8 @@ import {
 
 const useAuthState = () => {
   const { auth, dispatchAuth } = useContext(AuthContext);
+
+  const [activeConversations, setActiveConversations] = useState([{}]);
 
   const login = async (payload) => {
     try {
@@ -43,12 +45,22 @@ const useAuthState = () => {
       console.log(err);
     }
   };
+  const loadActiveConversations = async () => {
+    try {
+      const response = await handleApiCall("api/conversations", "GET");
+      setActiveConversations(response.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return {
     auth,
     login,
     loadUser,
     loadUsers,
+    loadActiveConversations,
+    activeConversations,
   };
 };
 

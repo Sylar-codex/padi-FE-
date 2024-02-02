@@ -2,24 +2,24 @@ import React, { useEffect } from "react";
 import { chatPreview } from "../data/messageData";
 import avatar from "../assets/contacts-img/Ravi.svg";
 import useAuthState from "../hooks/authHook";
-import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import { createConversation } from "../utilities/createConversation";
+import useWebSocketHook from "../hooks/websocketHook";
+import { useNavigate } from "react-router-dom";
 
-// This is a component to display active users i.e users
-// you have been in communications with recently
-
-function ChatPreview({ id, setId, setConversationName }) {
-  const { auth, loadActiveConversations, activeConversations } = useAuthState();
+// Where users can search or get users to have conversation with
+function Conversations() {
+  const { auth, loadUsers } = useAuthState();
+  const { setConversationName } = useWebSocketHook();
   const { user, users } = auth;
 
+  const navigate = useNavigate();
   useEffect(() => {
-    loadActiveConversations();
-    console.log(activeConversations);
+    loadUsers();
   }, []);
 
-  // const otherUsers = users.filter((otherUser) => {
-  //   return user?.username !== otherUser.username;
-  // });
+  const otherUsers = users.filter((otherUser) => {
+    return user?.username !== otherUser.username;
+  });
 
   return (
     <div className="w-2/5 h-full sticky top-0 z-10">
@@ -36,7 +36,7 @@ function ChatPreview({ id, setId, setConversationName }) {
           with recently
         </p>
       </div>
-      {activeConversations.length < 1 && (
+      {otherUsers.length < 1 && (
         <div className="py-20 px-10 border-r-2 border-gray-5 text-center pb-96">
           <h2 className="text-gray-100 font-medium">No chats</h2>
           <p className="text-gray-90 mt-2 text-sm">
@@ -47,17 +47,16 @@ function ChatPreview({ id, setId, setConversationName }) {
       )}
       <div className="py-3 px-2 border-r-2 border-gray-5">
         {user &&
-          activeConversations.map((converse, i) => (
+          otherUsers.map((otherUser, i) => (
             <div
               onClick={() => {
                 setConversationName(
-                  createConversation(converse.other_user.username, user)
+                  createConversation(otherUser.username, user)
                 );
-                setId(converse.id);
+                navigate("/chat");
               }}
-              className={`flex space-x-3 border-b-2 border-gray-5 rounded-xl py-3 px-2 ${
-                id === converse.id ? "bg-gray-20" : "bg-white"
-              } hover:cursor-pointer`}
+              className={`flex space-x-3 border-b-2 border-gray-5 rounded-xl py-3 px-2 "bg-white"
+               hover:cursor-pointer`}
               key={i}
             >
               <div className="w-20">
@@ -66,14 +65,13 @@ function ChatPreview({ id, setId, setConversationName }) {
               <div>
                 <div className="flex items-center justify-between">
                   <p className="text-gray-100 font-semibold">
-                    {converse.other_user?.username}
+                    {otherUser.username}
                   </p>
-                  <p className="text-xs text-gray-70">
-                    {formartTimeStamp(converse.last_message?.timestamp)}
-                  </p>
+                  <p className="text-xs text-gray-70">12 hours ago</p>
                 </div>
                 <p className="text-gray-70 text-sm mt-2">
-                  {converse.last_message?.content}
+                  Mia: I'm looking forward to it too. I believe in you and your
+                  ability to m...
                 </p>
               </div>
             </div>
@@ -83,4 +81,4 @@ function ChatPreview({ id, setId, setConversationName }) {
   );
 }
 
-export default ChatPreview;
+export default Conversations;
