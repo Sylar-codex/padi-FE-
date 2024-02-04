@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 function Conversations() {
   const { auth, loadUsers } = useAuthState();
   const { setConversationName } = useWebSocketHook();
+
   const { user, users } = auth;
 
   const navigate = useNavigate();

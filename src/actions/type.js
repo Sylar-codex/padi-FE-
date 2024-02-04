@@ -8,3 +8,4 @@ export const USERS_LOADED = "USERS_LOADED";
 // webocket types
 export const last_50_messages = "last_50_messages";
 export const chat_message_echo = "chat_message_echo";
+export const load_more_messages = "load_more_messages";

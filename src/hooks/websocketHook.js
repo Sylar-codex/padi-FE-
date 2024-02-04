@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect, useRef } from "react";
-import useWebSocket, { ReadyState } from "react-use-websocket";
 import { MessageContext } from "../contexts/MessageContext";
 import { AuthContext } from "../contexts/AuthContext";
 

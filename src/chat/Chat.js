@@ -15,15 +15,19 @@ import useAuthState from "../hooks/authHook";
 import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChatLoader from "../components/utility-component/ChatLoader";
+import useMessageState from "../hooks/messageHook";
 
 function Chat() {
   const [id, setId] = useState(0);
-  const [hasMoreMessages, setHasMoreMessages] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const [newConversation, setNewConversation] = useState(false);
   const { auth } = useAuthState();
 
   const { user } = auth;
+
+  console.log(messages.hasMoreMessages);
+
+  const { getMessages } = useMessageState();
 
   const { isReady, messages, setConversationName, conversationName, current } =
     useWebSocketHook();
@@ -82,60 +86,63 @@ function Chat() {
                   </p>
                 </div>
                 <div id="scrollableDiv" className="p-4 h-3/4 overflow-y-scroll">
-                  <InfiniteScroll
-                    dataLength={messages.messages.length}
-                    // next={fetchMessages}
-                    className="flex flex-col-reverse" // To put endMessage and loader to the top
-                    inverse={true}
-                    hasMore={hasMoreMessages}
-                    loader={<ChatLoader />}
-                    scrollableTarget="scrollableDiv"
-                  >
-                    {/* sender */}
-                    {messages.messages.map((message) => (
-                      <div
-                        className={`flex ${
-                          user?.username === message.from_user.username
-                            ? "justify-end"
-                            : "justify-start"
-                        }`}
-                      >
+                  <div>
+                    <InfiniteScroll
+                      dataLength={messages.messages.length}
+                      next={getMessages}
+                      className="flex flex-col-reverse" // To put endMessage and loader to the top
+                      inverse={true}
+                      hasMore={messages.hasMoreMessages}
+                      loader={<ChatLoader />}
+                      scrollableTarget="scrollableDiv"
+                    >
+                      {/* sender */}
+                      {messages.messages.map((message) => (
                         <div
-                          className={`w-2/3 flex ${
-                            user?.username === message.from_user.username
-                              ? "flex-row"
-                              : "flex-row-reverse"
-                          } justify-center items-center space-x-2`}
+                          key={message.id}
+                          className={`flex ${
+                            user?.username === message.from_user?.username
+                              ? "justify-end"
+                              : "justify-start"
+                          }`}
                         >
-                          <div className="w-11/12">
-                            <p
-                              className={`${
-                                user?.username === message.from_user.username
-                                  ? "bg-primary-50 py-3 px-5 text-gray-90 rounded-lg"
-                                  : "bg-gray-20 py-3 px-5 text-gray-90 rounded-lg"
-                              }`}
-                            >
-                              {message.content}
-                            </p>
-                            <p className="flex gap-x-1 justify-end text-gray-70 text-xs mt-1">
-                              {formartTimeStamp(message.timestamp)}
-                            </p>
-                          </div>
-                          <div className="w w-1/12">
-                            <img
-                              className="w-full"
-                              src={
-                                user?.username === message.from_user.username
-                                  ? coacheeProfile
-                                  : Ravi
-                              }
-                              alt="avatar"
-                            />
+                          <div
+                            className={`w-2/3 flex ${
+                              user?.username === message.from_user?.username
+                                ? "flex-row"
+                                : "flex-row-reverse"
+                            } justify-center items-center space-x-2`}
+                          >
+                            <div className="w-11/12">
+                              <p
+                                className={`${
+                                  user?.username === message.from_user?.username
+                                    ? "bg-primary-50 py-3 px-5 text-gray-90 rounded-lg"
+                                    : "bg-gray-20 py-3 px-5 text-gray-90 rounded-lg"
+                                }`}
+                              >
+                                {message.content}
+                              </p>
+                              <p className="flex gap-x-1 justify-end text-gray-70 text-xs mt-1">
+                                {formartTimeStamp(message.timestamp)}
+                              </p>
+                            </div>
+                            <div className="w w-1/12">
+                              <img
+                                className="w-full"
+                                src={
+                                  user?.username === message.from_user?.username
+                                    ? coacheeProfile
+                                    : Ravi
+                                }
+                                alt="avatar"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </InfiniteScroll>
+                      ))}
+                    </InfiniteScroll>
+                  </div>
                 </div>
                 {/* send message input and button */}
                 <div className="flex space-x-1 items-center w-full bg-white p-3 absolute bottom-0 right-0 z-20">

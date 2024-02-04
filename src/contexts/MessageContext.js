@@ -7,6 +7,7 @@ const { Provider } = MessageContext;
 
 const initialState = {
   messages: [],
+  hasMoreMessages: false,
 };
 
 const MessageProvider = ({ children }) => {
