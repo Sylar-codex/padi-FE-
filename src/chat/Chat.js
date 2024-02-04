@@ -9,13 +9,12 @@ import hourGlass from "../assets/icons/hour-glass.svg";
 import pinkPlay from "../assets/icons/pink-play.svg";
 import externalLink from "../assets/icons/external-link.svg";
 import lockClosed from "../assets/icons/lock-closed.svg";
-import useWebSocketHook from "../hooks/websocketHook";
+import useMessageState from "../hooks/messageHook";
 import ChatPreview from "./ChatPreview";
 import useAuthState from "../hooks/authHook";
 import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChatLoader from "../components/utility-component/ChatLoader";
-import useMessageState from "../hooks/messageHook";
 
 function Chat() {
   const [id, setId] = useState(0);
@@ -25,12 +24,14 @@ function Chat() {
 
   const { user } = auth;
 
-  console.log(messages.hasMoreMessages);
-
-  const { getMessages } = useMessageState();
-
-  const { isReady, messages, setConversationName, conversationName, current } =
-    useWebSocketHook();
+  const {
+    isReady,
+    messages,
+    setConversationName,
+    conversationName,
+    getMessages,
+    current,
+  } = useMessageState();
 
   const handleSubmit = () => {
     if (messages.length === 0) {
@@ -46,6 +47,10 @@ function Chat() {
     }
     setNewMessage("");
   };
+  useEffect(() => {
+    console.log(messages.messages);
+    console.log(messages.messages.length);
+  }, [messages]);
 
   return (
     <div>
@@ -85,7 +90,10 @@ function Chat() {
                     session.
                   </p>
                 </div>
-                <div id="scrollableDiv" className="p-4 h-3/4 overflow-y-scroll">
+                <div
+                  id="scrollableDiv"
+                  className="p-4 h-3/4 overflow-y-auto relative flex flex-col-reverse"
+                >
                   <div>
                     <InfiniteScroll
                       dataLength={messages.messages.length}

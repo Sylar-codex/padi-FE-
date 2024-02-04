@@ -3,13 +3,13 @@ import { chatPreview } from "../data/messageData";
 import avatar from "../assets/contacts-img/Ravi.svg";
 import useAuthState from "../hooks/authHook";
 import { createConversation } from "../utilities/createConversation";
-import useWebSocketHook from "../hooks/websocketHook";
 import { useNavigate } from "react-router-dom";
+import useMessageState from "../hooks/messageHook";
 
 // Where users can search or get users to have conversation with
 function Conversations() {
   const { auth, loadUsers } = useAuthState();
-  const { setConversationName } = useWebSocketHook();
+  const { setConversationName } = useMessageState();
 
   const { user, users } = auth;
 

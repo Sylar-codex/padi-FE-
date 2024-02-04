@@ -26,7 +26,7 @@ function ChatPreview({ id, setId, setConversationName }) {
       <div className="flex items-center space-x-3 p-3">
         <h2 className="text-grray-100 font-semibold">Active Contacts</h2>
         <p className="w-5 h-5 p-4 rounded-full text-gray-70 flex items-center justify-center bg-gray-10">
-          {chatPreview.length}
+          {activeConversations.length}
         </p>
       </div>
       {/* need to make this fixed when it is at the top of the page the element below it need to be scrollable as well */}

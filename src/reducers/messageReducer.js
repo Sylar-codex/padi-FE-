@@ -17,13 +17,13 @@ function messageReducer(state, action) {
       return {
         ...state,
         messages: [action.payload.message, ...state.messages],
-        hasMoreMessages: action.payload.next !== null,
       };
 
     case load_more_messages:
       return {
         ...state,
-        messages: [action.payload.results],
+        messages: [...state.messages, ...action.payload.results],
+        hasMoreMessages: action.payload.next !== null,
       };
 
     default:
