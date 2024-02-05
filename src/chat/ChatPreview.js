@@ -14,7 +14,6 @@ function ChatPreview({ id, setId, setConversationName }) {
 
   useEffect(() => {
     loadActiveConversations();
-    console.log(activeConversations);
   }, []);
 
   // const otherUsers = users.filter((otherUser) => {

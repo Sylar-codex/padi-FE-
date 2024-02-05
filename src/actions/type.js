@@ -9,3 +9,6 @@ export const USERS_LOADED = "USERS_LOADED";
 export const last_50_messages = "last_50_messages";
 export const chat_message_echo = "chat_message_echo";
 export const load_more_messages = "load_more_messages";
+export const user_join = "user_join";
+export const user_leave = "user_leave";
+export const online_user_list = "online_user_list";

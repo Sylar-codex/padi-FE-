@@ -48,6 +48,7 @@ const useAuthState = () => {
   const loadActiveConversations = async () => {
     try {
       const response = await handleApiCall("api/conversations", "GET");
+      console.log(response.data);
       setActiveConversations(response.data);
     } catch (err) {
       console.log(err);

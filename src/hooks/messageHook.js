@@ -6,6 +6,7 @@ import { load_more_messages } from "../actions/type";
 
 const useMessageState = () => {
   const [conversationName, setConversationName] = useState("");
+  const [conversation, setConversation] = useState(null);
 
   const { messages, dispatchMessages } = useContext(MessageContext);
 
@@ -19,13 +20,28 @@ const useMessageState = () => {
         `api/messages/?conversation=${conversationName}&page=${page}`,
         "GET"
       );
-      console.log(response.data);
       dispatchMessages({ type: load_more_messages, payload: response.data });
       setPage((prev) => prev + 1);
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const getConversations = async () => {
+      try {
+        const response = await handleApiCall(
+          `api/conversations/${conversationName}`,
+          "GET"
+        );
+        console.log("conversation", response.data);
+        setConversation(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getConversations();
+  }, [conversationName]);
 
   const ws = useRef(null);
 
@@ -61,6 +77,7 @@ const useMessageState = () => {
     conversationName,
     getMessages,
     current,
+    conversation,
   };
 };
 

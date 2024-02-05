@@ -31,6 +31,7 @@ function Chat() {
     conversationName,
     getMessages,
     current,
+    conversation,
   } = useMessageState();
 
   const handleSubmit = () => {
@@ -47,10 +48,6 @@ function Chat() {
     }
     setNewMessage("");
   };
-  useEffect(() => {
-    console.log(messages.messages);
-    console.log(messages.messages.length);
-  }, [messages]);
 
   return (
     <div>
@@ -66,24 +63,32 @@ function Chat() {
           <div className="w-3/5">
             {conversationName.length > 0 ? (
               <div className="relative h-full bg-gray-5 ">
-                <div className="flex border-b border-gray-20 items-center justify-between p-3 bg-white ">
-                  <div className="flex space-x-2">
-                    <div>
-                      <img src={Ravi} alt="avatar" />
+                {conversation && (
+                  <div className="flex border-b border-gray-20 items-center justify-between p-3 bg-white ">
+                    <div className="flex space-x-2">
+                      <div>
+                        <img src={Ravi} alt="avatar" />
+                      </div>
+                      <div>
+                        <p className="text-gray-100 font-semibold">
+                          {conversation.other_user?.username}
+                        </p>
+                        <p className="text-gray-90 text-sm">
+                          {messages.onlineUsers.includes(
+                            conversation.other_user?.username
+                          )
+                            ? " online"
+                            : "Last seen: 24 Jan, 2023 @ 9:30AM"}
+                        </p>
+                      </div>
                     </div>
                     <div>
-                      <p className="text-gray-100 font-semibold">Ravi Patel</p>
-                      <p className="text-gray-90 text-sm">
-                        Next session: 24 Jan, 2023 @ 9:30AM
-                      </p>
+                      <button className="rounded-full p-3 border border-gray-20 w-32 text-gray-90 text-center">
+                        View Profile
+                      </button>
                     </div>
                   </div>
-                  <div>
-                    <button className="rounded-full p-3 border border-gray-20 w-32 text-gray-90 text-center">
-                      View Profile
-                    </button>
-                  </div>
-                </div>
+                )}
                 <div className="bg-info-10 text-xs text-gray-90 p-4 font-semibold text-center mx-10 rounded-xl shadow-md mt-1 relative z-20">
                   <p>
                     This chat is only available for 2 days after your scheduled
