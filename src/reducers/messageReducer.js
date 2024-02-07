@@ -5,6 +5,7 @@ import {
   online_user_list,
   user_join,
   user_leave,
+  typing,
 } from "../actions/type";
 
 function messageReducer(state, action) {
@@ -40,13 +41,18 @@ function messageReducer(state, action) {
       return {
         ...state,
         onlineUsers: state.onlineUsers.filter(
-          (user) => user.id !== action.payload.user.id
+          (user) => user !== action.payload.user
         ),
       };
     case online_user_list:
       return {
         ...state,
         onlineUsers: action.payload.users,
+      };
+    case typing:
+      return {
+        ...state,
+        typingEvent: action.payload,
       };
 
     default:

@@ -9,6 +9,7 @@ const initialState = {
   messages: [],
   onlineUsers: [],
   hasMoreMessages: false,
+  typingEvent: null,
 };
 
 const MessageProvider = ({ children }) => {

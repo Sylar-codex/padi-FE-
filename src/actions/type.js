@@ -12,3 +12,4 @@ export const load_more_messages = "load_more_messages";
 export const user_join = "user_join";
 export const user_leave = "user_leave";
 export const online_user_list = "online_user_list";
+export const typing = "typing";

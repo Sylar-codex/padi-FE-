@@ -16,10 +16,6 @@ function ChatPreview({ id, setId, setConversationName }) {
     loadActiveConversations();
   }, []);
 
-  // const otherUsers = users.filter((otherUser) => {
-  //   return user?.username !== otherUser.username;
-  // });
-
   return (
     <div className="w-2/5 h-full sticky top-0 z-10">
       <div className="flex items-center space-x-3 p-3">

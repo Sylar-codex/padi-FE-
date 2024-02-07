@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { chatPreview } from "../data/messageData";
+import React, { useState, useEffect, useRef } from "react";
 import coacheeProfile from "../assets/images/Avatar2.svg";
 import Ravi from "../assets/contacts-img/Ravi.svg";
-import Mia from "../assets/contacts-img/Mia.svg";
-import Karen from "../assets/contacts-img/Karen.svg";
 import paperAirplane from "../assets/icons/paper-airplane.svg";
 import hourGlass from "../assets/icons/hour-glass.svg";
-import pinkPlay from "../assets/icons/pink-play.svg";
-import externalLink from "../assets/icons/external-link.svg";
-import lockClosed from "../assets/icons/lock-closed.svg";
 import useMessageState from "../hooks/messageHook";
 import ChatPreview from "./ChatPreview";
 import useAuthState from "../hooks/authHook";
 import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChatLoader from "../components/utility-component/ChatLoader";
+import { useHotkeys } from "react-hotkeys-hook";
 
 function Chat() {
   const [id, setId] = useState(0);
   const [newMessage, setNewMessage] = useState("");
   const [newConversation, setNewConversation] = useState(false);
-  const { auth } = useAuthState();
+  const [meTyping, setMeTyping] = useState(false);
+  const [typing, setTyping] = useState(false);
 
+  const timeout = useRef();
+
+  const { auth, loadActiveConversations } = useAuthState();
   const { user } = auth;
+
+  useEffect(() => {
+    console.log("online-users", messages.onlineUsers);
+  }, []);
 
   const {
     isReady,
@@ -34,6 +37,41 @@ function Chat() {
     conversation,
   } = useMessageState();
 
+  // timeout function
+  const timeoutFunction = () => {
+    setMeTyping(false);
+
+    const dataObj = {
+      type: "typing",
+      typing: false,
+    };
+    const stringifyData = JSON.stringify(dataObj);
+    current?.send(stringifyData);
+  };
+
+  const onType = () => {
+    if (!meTyping) {
+      setMeTyping(true);
+      const dataObj = {
+        type: "typing",
+        typing: true,
+      };
+      const stringifyData = JSON.stringify(dataObj);
+      current?.send(stringifyData);
+      timeout.current = setTimeout(timeoutFunction, 5000);
+    } else {
+      clearTimeout(timeout.current);
+      timeout.current = setTimeout(timeoutFunction, 5000);
+    }
+  };
+
+  useEffect(
+    () => () => clearTimeout(timeout.current),
+
+    []
+  );
+
+  // function to perform sending the message
   const handleSubmit = () => {
     if (messages.length === 0) {
       return;
@@ -47,7 +85,40 @@ function Chat() {
       current?.send(stringifyData);
     }
     setNewMessage("");
+    clearTimeout(timeout.current);
+    timeoutFunction();
   };
+
+  const inputRef = useHotkeys(
+    "enter",
+    () => {
+      handleSubmit();
+    },
+    {
+      enableOnTags: ["INPUT"],
+    }
+  );
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
+
+  // handleMessage method, to handle change in the input
+  const handleMessage = (e) => {
+    setNewMessage(e.target.value);
+    onType();
+  };
+
+  useEffect(() => {
+    if (messages.typingEvent) {
+      const updateTyping = () => {
+        if (messages.typingEvent.user !== user?.username) {
+          setTyping(messages.typingEvent.typing);
+        }
+      };
+      updateTyping();
+    }
+  }, [messages.typingEvent, typing]);
 
   return (
     <div>
@@ -73,13 +144,19 @@ function Chat() {
                         <p className="text-gray-100 font-semibold">
                           {conversation.other_user?.username}
                         </p>
-                        <p className="text-gray-90 text-sm">
-                          {messages.onlineUsers.includes(
-                            conversation.other_user?.username
-                          )
-                            ? " online"
-                            : "Last seen: 24 Jan, 2023 @ 9:30AM"}
-                        </p>
+                        {!typing ? (
+                          <p className="text-gray-90 text-sm">
+                            {messages.onlineUsers.includes(
+                              conversation.other_user?.username
+                            )
+                              ? " online"
+                              : "Last seen: 24 Jan, 2023 @ 9:30AM"}
+                          </p>
+                        ) : (
+                          <p className="text-gray-90 text-sm italic">
+                            typing...
+                          </p>
+                        )}
                       </div>
                     </div>
                     <div>
@@ -97,7 +174,11 @@ function Chat() {
                 </div>
                 <div
                   id="scrollableDiv"
-                  className="p-4 h-3/4 overflow-y-auto relative flex flex-col-reverse"
+                  className={`p-4 h-3/4 overflow-y-auto relative flex ${
+                    messages.messages.length >= 10
+                      ? "flex-col-reverse"
+                      : "flex-col"
+                  }`}
                 >
                   <div>
                     <InfiniteScroll
@@ -163,9 +244,10 @@ function Chat() {
                     <input
                       className="bg-gray-10 py-3 px-5 rounded-xl outline-none placeholder:text-gray-60 w-full h-full"
                       value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
+                      onChange={handleMessage}
                       type="text"
                       placeholder="Start a conversation!"
+                      ref={inputRef}
                     />
                   </div>
                   <div

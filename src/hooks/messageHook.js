@@ -34,7 +34,6 @@ const useMessageState = () => {
           `api/conversations/${conversationName}`,
           "GET"
         );
-        console.log("conversation", response.data);
         setConversation(response.data);
       } catch (err) {
         console.log(err);
@@ -58,6 +57,10 @@ const useMessageState = () => {
     socket.onclose = () => setIsReady(false);
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      if (data.type === "online_user_list") {
+        console.log("online_user_list", data);
+      }
+
       dispatchMessages({ type: data.type, payload: data });
     };
 
