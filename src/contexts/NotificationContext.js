@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+import notificationReducer from "../reducers/notificationReducer";
 
 const NotificationContext = createContext(null);
 
@@ -6,7 +7,16 @@ const { Provider } = NotificationContext;
 
 const initialState = {};
 
-const NotificationProvider = () => {
-  const [notification, dispatchNotification] = useReducer(i);
-  return <Provider></Provider>;
+const NotificationProvider = ({ children }) => {
+  const [notification, dispatchNotification] = useReducer(
+    notificationReducer,
+    initialState
+  );
+  return (
+    <Provider value={{ notification, dispatchNotification }}>
+      {children}
+    </Provider>
+  );
 };
+
+export { NotificationContext, NotificationProvider };

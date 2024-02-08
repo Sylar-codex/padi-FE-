@@ -57,10 +57,6 @@ const useMessageState = () => {
     socket.onclose = () => setIsReady(false);
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      if (data.type === "online_user_list") {
-        console.log("online_user_list", data);
-      }
-
       dispatchMessages({ type: data.type, payload: data });
     };
 
