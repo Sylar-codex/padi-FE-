@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { NotificationContext } from "../contexts/NotificationContext";
 
 const useNotificationState = () => {
@@ -9,7 +9,11 @@ const useNotificationState = () => {
 
   const token = localStorage.getItem("authToken");
 
-  const url = token ? `ws://127.0.0.1:8000/notification/?token=${token}` : null;
+  const ws = useRef(null);
+
+  const url = token
+    ? `ws://127.0.0.1:8000/notifications/?token=${token}`
+    : null;
 
   useEffect(() => {
     const socket = new WebSocket(url);
@@ -18,6 +22,10 @@ const useNotificationState = () => {
     socket.onclose = () => setIsReady(false);
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      console.log("noti", data);
+      // if (data.type === "unread_count") {
+      //   console.log("unread", data);
+      // }
       dispatchNotification({ type: data.type, payload: data });
     };
 
@@ -26,7 +34,7 @@ const useNotificationState = () => {
     return () => {
       socket.close();
     };
-  }, [conversationName]);
+  }, []);
 
   const current = ws.current;
 

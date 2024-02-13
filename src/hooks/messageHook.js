@@ -59,7 +59,6 @@ const useMessageState = () => {
       const data = JSON.parse(e.data);
       dispatchMessages({ type: data.type, payload: data });
     };
-
     ws.current = socket;
 
     return () => {

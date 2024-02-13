@@ -5,7 +5,9 @@ const NotificationContext = createContext(null);
 
 const { Provider } = NotificationContext;
 
-const initialState = {};
+const initialState = {
+  unreadMessageCount: 0,
+};
 
 const NotificationProvider = ({ children }) => {
   const [notification, dispatchNotification] = useReducer(

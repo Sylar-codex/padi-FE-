@@ -7,14 +7,16 @@ import useAuthState from "../../hooks/authHook";
 function PasswordInput() {
   const navigate = useNavigate();
   const [password, setPassword] = useInputState();
-  const { login } = useAuthState();
+  const { login, auth } = useAuthState();
 
   const { username } = useParams();
 
   const handleSubmit = () => {
     if (password !== "") {
       login({ username, password });
-      navigate("/chat");
+    }
+    if (auth.isAuthenticated) {
+      navigate("/conversations");
     }
   };
   return (

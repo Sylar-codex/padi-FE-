@@ -4,6 +4,8 @@ import avatar from "../assets/contacts-img/Ravi.svg";
 import useAuthState from "../hooks/authHook";
 import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import { createConversation } from "../utilities/createConversation";
+import useNotificationState from "../hooks/notificationHook";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 // This is a component to display active users i.e users
 // you have been in communications with recently
@@ -11,18 +13,26 @@ import { createConversation } from "../utilities/createConversation";
 function ChatPreview({ id, setId, setConversationName }) {
   const { auth, loadActiveConversations, activeConversations } = useAuthState();
   const { user, users } = auth;
+  const { notification } = useNotificationState();
 
   useEffect(() => {
     loadActiveConversations();
   }, []);
-
+  useEffect(() => {
+    console.log("notification", notification);
+  }, [notification]);
   return (
-    <div className="w-2/5 h-full sticky top-0 z-10">
-      <div className="flex items-center space-x-3 p-3">
-        <h2 className="text-grray-100 font-semibold">Active Contacts</h2>
-        <p className="w-5 h-5 p-4 rounded-full text-gray-70 flex items-center justify-center bg-gray-10">
-          {activeConversations.length}
-        </p>
+    <div className="w-full h-full sticky top-0 z-10">
+      <div className="flex justify-between p-3">
+        <div className="flex items-center space-x-3">
+          <h2 className="text-grray-100 font-semibold">Active Contacts</h2>
+          <p className="w-5 h-5 p-4 rounded-full text-gray-70 flex items-center justify-center bg-gray-10">
+            {activeConversations.length}
+          </p>
+        </div>
+        <div className="border border-gray-40 rounded-full h-7 w-7 p-1 flex justify-center items-center hover:cursor-pointer">
+          <BsThreeDotsVertical />
+        </div>
       </div>
       {/* need to make this fixed when it is at the top of the page the element below it need to be scrollable as well */}
       <div className="bg-gray-10 text-gray-80 p-3 text-sm">
@@ -50,26 +60,36 @@ function ChatPreview({ id, setId, setConversationName }) {
                 );
                 setId(converse.id);
               }}
-              className={`flex space-x-3 border-b-2 border-gray-5 rounded-xl py-3 px-2 ${
+              className={`flex justify-between border-b-2 border-gray-5 rounded-xl py-3 px-2 ${
                 id === converse.id ? "bg-gray-20" : "bg-white"
               } hover:cursor-pointer`}
               key={i}
             >
-              <div className="w-20">
-                <img className="w-full" src={avatar} alt="avatar" />
-              </div>
-              <div>
-                <div className="flex items-center justify-between">
+              <div className="flex space-x-4">
+                <div className="w-16">
+                  <img className="w-full" src={avatar} alt="avatar" />
+                </div>
+
+                <div className="flex flex-col">
                   <p className="text-gray-100 font-semibold">
                     {converse.other_user?.username}
                   </p>
-                  <p className="text-xs text-gray-70">
-                    {formartTimeStamp(converse.last_message?.timestamp)}
+                  <p className="text-gray-70 text-sm mt-2">
+                    {converse.last_message?.content.length < 30
+                      ? converse.last_message?.content
+                      : converse.last_message?.content.substring(0, 30) + "..."}
                   </p>
                 </div>
-                <p className="text-gray-70 text-sm mt-2">
-                  {converse.last_message?.content}
+              </div>
+              <div className="flex flex-col items-center space-y-3">
+                <p className="text-xs text-gray-70">
+                  {formartTimeStamp(converse.last_message?.timestamp)}
                 </p>
+                {converse.unread_count > 0 && (
+                  <p className="flex items-center justify-center w-5 h-5 rounded-full p-1 bg-active text-white">
+                    {converse.unread_count}
+                  </p>
+                )}
               </div>
             </div>
           ))}

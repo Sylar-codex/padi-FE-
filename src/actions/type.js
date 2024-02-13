@@ -14,3 +14,4 @@ export const user_leave = "user_leave";
 export const online_user_list = "online_user_list";
 export const typing = "typing";
 export const unread_count = "unread_count";
+export const new_message_notification = "new_message_notification";
