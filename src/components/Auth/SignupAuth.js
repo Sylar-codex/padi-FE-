@@ -1,37 +1,36 @@
 import React from "react";
-import useinputState from "../../hooks/inputHook";
-import { useNavigate } from "react-router-dom";
 import InputField from "../inputs/InputField";
 
-function UsernameInput() {
-  const [username, setUsername] = useinputState("");
-  const navigate = useNavigate();
-
-  const handleSubmit = () => {
-    if (username !== "") {
-      navigate(`/login/password/${username}`);
-    }
-  };
-
+function SignupAuth({ email, setEmail, username, setUsername, setSteps }) {
   return (
     <div>
-      <div className="w-1/2 mx-auto">
-        {/* inputfield component */}
+      <div className="w-1/2 mx-auto space-y-4">
+        {/* username input */}
         <InputField
           name={"username"}
           id={"username"}
           type={"text"}
-          placeHolder={"Your username"}
+          placeHolder={"Your Username"}
           handleChange={setUsername}
           value={username}
           label={"Your Username"}
+          required={true}
+        />
+        <InputField
+          name={"email"}
+          id={"email"}
+          type={"email"}
+          placeHolder={"Your email"}
+          handleChange={setEmail}
+          value={email}
+          label={"Your Email"}
           required={true}
         />
       </div>
       <div className="flex justify-center mt-8">
         <button
           onClick={() => {
-            handleSubmit();
+            setSteps(1);
           }}
           className="bg-active text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
         >
@@ -42,4 +41,4 @@ function UsernameInput() {
   );
 }
 
-export default UsernameInput;
+export default SignupAuth;

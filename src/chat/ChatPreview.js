@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { chatPreview } from "../data/messageData";
 import avatar from "../assets/contacts-img/Ravi.svg";
 import useAuthState from "../hooks/authHook";
@@ -10,7 +10,8 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 // This is a component to display active users i.e users
 // you have been in communications with recently
 
-function ChatPreview({ id, setId, setConversationName }) {
+function ChatPreview({ id, setId, setConversationName, setOpenUserProfile }) {
+  const [openDropDown, setOpenDropDown] = useState(false);
   const { auth, loadActiveConversations, activeConversations } = useAuthState();
   const { user, users } = auth;
   const { notification } = useNotificationState();
@@ -30,8 +31,21 @@ function ChatPreview({ id, setId, setConversationName }) {
             {activeConversations.length}
           </p>
         </div>
-        <div className="border border-gray-40 rounded-full h-7 w-7 p-1 flex justify-center items-center hover:cursor-pointer">
-          <BsThreeDotsVertical />
+        <div className="relative">
+          <div
+            onClick={() => {
+              setOpenDropDown((prev) => !prev);
+            }}
+            className="border border-gray-40 rounded-full h-7 w-7 p-1 flex justify-center items-center hover:cursor-pointer"
+          >
+            <BsThreeDotsVertical />
+          </div>
+          {openDropDown && (
+            <DropDown
+              setOpenDropDown={setOpenDropDown}
+              setOpenUserProfile={setOpenUserProfile}
+            />
+          )}
         </div>
       </div>
       {/* need to make this fixed when it is at the top of the page the element below it need to be scrollable as well */}
@@ -99,3 +113,25 @@ function ChatPreview({ id, setId, setConversationName }) {
 }
 
 export default ChatPreview;
+
+function DropDown({ setOpenDropDown, setOpenUserProfile }) {
+  return (
+    <div className="absolute top-9 -left-20 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white py-2 px-3 space-y-2">
+      <div
+        onClick={() => {
+          setOpenDropDown(false);
+          setOpenUserProfile(true);
+        }}
+      >
+        <p>Profile</p>
+      </div>
+      <div
+        onClick={() => {
+          setOpenDropDown(false);
+        }}
+      >
+        <p className="text-error-50"> Logout</p>
+      </div>
+    </div>
+  );
+}

@@ -17,13 +17,13 @@ function InputField({
         {value.length > 0 && (
           <label
             htmlFor={id}
-            className="text-xs text-primary-50 absolute bg-white p-px -top-2 left-3"
+            className="text-xs text-active absolute bg-white p-px -top-2 left-3"
           >
             {label}
           </label>
         )}
         <input
-          className="w-full border border-gray-30 h-full p-3 outline-primary-50 outline-1 rounded-lg placeholder:text-gray-30"
+          className="w-full border border-gray-30 h-full p-3 outline-active outline-1 rounded-lg placeholder:text-gray-30"
           type={type}
           id={id}
           name={name}

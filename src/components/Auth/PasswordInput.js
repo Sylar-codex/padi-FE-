@@ -39,7 +39,7 @@ function PasswordInput() {
         </div>
         <Link
           to="/reset_password"
-          className="flex justify-center text-primary-50 mt-1 text-sm"
+          className="flex justify-center text-active mt-1 text-sm"
         >
           Forgot password?
         </Link>
@@ -60,7 +60,7 @@ function PasswordInput() {
           onClick={() => {
             handleSubmit();
           }}
-          className="bg-primary-50 text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
+          className="bg-active text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
         >
           Continue
         </button>

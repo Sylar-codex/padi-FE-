@@ -1,5 +1,9 @@
 import {
+  LOGIN_FAIL,
   LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  REGISTER_FAIL,
+  REGISTER_SUCCESS,
   USERS_LOADED,
   USERS_LOADING,
   USER_LOADED,
@@ -20,6 +24,7 @@ function authReducer(state, action) {
         user: action.payload,
       };
     case LOGIN_SUCCESS:
+    case REGISTER_SUCCESS:
       localStorage.setItem("authToken", action.payload.token);
       return {
         ...state,
@@ -37,6 +42,17 @@ function authReducer(state, action) {
         ...state,
         users: action.payload,
         isLoading: false,
+      };
+    case LOGOUT_SUCCESS:
+    case REGISTER_FAIL:
+    case LOGIN_FAIL:
+      localStorage.removeItem("authToken");
+      return {
+        ...state,
+        isLoading: false,
+        user: null,
+        users: null,
+        isAuthenticated: false,
       };
 
     default:
