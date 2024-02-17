@@ -95,8 +95,8 @@ function ChatPreview({
                   <img
                     className="w-full  h-full object-cover rounded-full"
                     src={
-                      converse.other_user_profile.image
-                        ? converse.other_user_profile.image
+                      converse.other_user_profile?.image
+                        ? converse.other_user_profile?.image
                         : userProfilePicDefault
                     }
                     alt="avatar"

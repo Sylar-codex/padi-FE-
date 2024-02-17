@@ -9,6 +9,7 @@ import { formartTimeStamp } from "../../utilities/formartTimeStamp";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChatLoader from "../utility-component/ChatLoader";
 import { useHotkeys } from "react-hotkeys-hook";
+import userProfilePicDefault from "../../assets/icons/user_profile.svg";
 
 function Messages({
   isReady,
@@ -222,15 +223,22 @@ function Messages({
                         </p>
                       </div>
                       <div className="w w-1/12">
-                        <img
-                          className="w-full"
-                          src={
-                            user?.username === message.from_user?.username
-                              ? coacheeProfile
-                              : Ravi
-                          }
-                          alt="avatar"
-                        />
+                        <div className="w-10 h-10 rounded-full bg-gray-50">
+                          <img
+                            className="w-full h-full rounded-full object-cover"
+                            src={
+                              message.from_user?.id ===
+                              message.from_user_profile?.user
+                                ? message.from_user_profile?.image
+                                  ? message.from_user_profile?.image
+                                  : userProfilePicDefault
+                                : message.to_user_profile?.image
+                                ? message.to_user_profile?.image
+                                : userProfilePicDefault
+                            }
+                            alt="avatar"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

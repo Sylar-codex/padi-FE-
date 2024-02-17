@@ -71,6 +71,7 @@ function UserProfile({ setOpenUserProfile, user, userProfile }) {
                   setTempPhoto={setTempPhoto}
                   setImagePreview={setImagePreview}
                   setProfilePicViewModal={setProfilePicViewModal}
+                  userProfile={userProfile}
                 />
               )}
             </div>
@@ -156,20 +157,36 @@ function DropDown({
   setImagePreview,
   setTempPhoto,
   setProfilePicViewModal,
+  userProfile,
 }) {
   return (
     <div className="absolute top-16 left-24 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
+      {userProfile?.image && (
+        <div>
+          <div
+            className="hover:bg-gray-20 py-2 px-2 rounded-t-xl"
+            onClick={() => {
+              setProfilePicViewModal(true);
+              setOpenDropDown(false);
+            }}
+          >
+            <p>View Photo</p>
+          </div>
+
+          <div
+            className="hover:bg-gray-20 py-2 px-2"
+            onClick={() => {
+              setOpenDropDown(false);
+            }}
+          >
+            <p>Remove Photo</p>
+          </div>
+        </div>
+      )}
       <div
-        className="hover:bg-gray-20 py-2 px-2 rounded-t-xl"
-        onClick={() => {
-          setProfilePicViewModal(true);
-          setOpenDropDown(false);
-        }}
-      >
-        <p>View Photo</p>
-      </div>
-      <div
-        className="hover:bg-gray-20 py-2 px-2"
+        className={`hover:bg-gray-20 py-2 px-2 ${
+          userProfile?.image ? "rounded-b-xl" : "rounded-xl"
+        }`}
         onClick={() => {
           // setOpenDropDown(false);
         }}
@@ -188,14 +205,6 @@ function DropDown({
           />
           <p>Upload Photo</p>
         </label>
-      </div>
-      <div
-        className="hover:bg-gray-20 py-2 px-2 rounded-b-xl"
-        onClick={() => {
-          setOpenDropDown(false);
-        }}
-      >
-        <p>Remove Photo</p>
       </div>
     </div>
   );

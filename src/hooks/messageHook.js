@@ -57,6 +57,7 @@ const useMessageState = () => {
     socket.onclose = () => setIsReady(false);
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
+      console.log(data);
       dispatchMessages({ type: data.type, payload: data });
     };
     ws.current = socket;
