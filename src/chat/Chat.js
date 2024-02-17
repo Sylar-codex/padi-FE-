@@ -12,11 +12,15 @@ function Chat() {
 
   const [otherUserProfile, setOtherUserprofile] = useState(false);
 
-  const { auth, loadActiveConversations } = useAuthState();
-  const { user } = auth;
+  const [otherUser, setOtherUser] = useState([{}]);
+
+  const { auth, loadActiveConversations, activeConversations } = useAuthState();
+
+  const { user, userProfile } = auth;
 
   useEffect(() => {
     console.log("online-users", messages.onlineUsers);
+    userProfile && console.log("userProfile", userProfile);
   }, []);
 
   const {
@@ -33,19 +37,30 @@ function Chat() {
     <div className="border border-gray-20 shadow-xl rounded-xl flex h-screen">
       <div className="w-2/5">
         {openUserProfile ? (
-          <UserProfile setOpenUserProfile={setOpenUserProfile} />
+          <UserProfile
+            setOpenUserProfile={setOpenUserProfile}
+            user={user}
+            userProfile={userProfile}
+          />
         ) : (
           <ChatPreview
             id={id}
             setId={setId}
             setConversationName={setConversationName}
             setOpenUserProfile={setOpenUserProfile}
+            user={user}
+            loadActiveConversations={loadActiveConversations}
+            activeConversations={activeConversations}
+            setOtherUser={setOtherUser}
           />
         )}
       </div>
       <div className="w-3/5">
         {otherUserProfile ? (
-          <OtherProfile setOtherUserprofile={setOtherUserprofile} />
+          <OtherProfile
+            setOtherUserprofile={setOtherUserprofile}
+            otherUser={otherUser}
+          />
         ) : (
           <Messages
             isReady={isReady}

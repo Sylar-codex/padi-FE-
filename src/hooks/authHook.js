@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { handleApiCall } from "../services/httpConfig";
+import { handleApiCall, handleApiCallFormData } from "../services/httpConfig";
 import {
   LOGIN_FAIL,
   LOGIN_SUCCESS,
@@ -11,6 +11,8 @@ import {
   USERS_LOADING,
   USER_LOADED,
   USER_LOADING,
+  USER_PROFILE_LOADED,
+  USER_PROFILE_LOADING,
 } from "../actions/type";
 // import { returnError } from "../actions/messages";
 
@@ -68,6 +70,31 @@ const useAuthState = () => {
     }
   };
 
+  // get user profile
+  const loadUserProfile = async () => {
+    try {
+      dispatchAuth({ type: USER_PROFILE_LOADING });
+      const response = await handleApiCall("api/get/user_profile", "GET");
+      dispatchAuth({ type: USER_PROFILE_LOADED, payload: response.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // update user profile
+  const updateUserProfile = async (payload, id) => {
+    try {
+      const response = await handleApiCallFormData(
+        `api/update/user_profile/${id}/`,
+        "PATCH",
+        payload
+      );
+      dispatchAuth({ type: USER_PROFILE_LOADED, payload: response.data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // get all users
   const loadUsers = async () => {
     try {
@@ -97,6 +124,8 @@ const useAuthState = () => {
     loadUsers,
     loadActiveConversations,
     activeConversations,
+    loadUserProfile,
+    updateUserProfile,
   };
 };
 

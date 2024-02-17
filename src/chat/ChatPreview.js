@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { chatPreview } from "../data/messageData";
 import avatar from "../assets/contacts-img/Ravi.svg";
-import useAuthState from "../hooks/authHook";
 import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import { createConversation } from "../utilities/createConversation";
 import useNotificationState from "../hooks/notificationHook";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import userProfilePicDefault from "../assets/icons/user_profile.svg";
 
 // This is a component to display active users i.e users
 // you have been in communications with recently
 
-function ChatPreview({ id, setId, setConversationName, setOpenUserProfile }) {
+function ChatPreview({
+  id,
+  setId,
+  setConversationName,
+  setOpenUserProfile,
+  user,
+  loadActiveConversations,
+  activeConversations,
+  setOtherUser,
+}) {
   const [openDropDown, setOpenDropDown] = useState(false);
-  const { auth, loadActiveConversations, activeConversations } = useAuthState();
-  const { user, users } = auth;
   const { notification } = useNotificationState();
 
   useEffect(() => {
@@ -72,6 +79,10 @@ function ChatPreview({ id, setId, setConversationName, setOpenUserProfile }) {
                 setConversationName(
                   createConversation(converse.other_user.username, user)
                 );
+                setOtherUser([
+                  converse.other_user,
+                  converse.other_user_profile,
+                ]);
                 setId(converse.id);
               }}
               className={`flex justify-between border-b-2 border-gray-5 rounded-xl py-3 px-2 ${
@@ -80,8 +91,16 @@ function ChatPreview({ id, setId, setConversationName, setOpenUserProfile }) {
               key={i}
             >
               <div className="flex space-x-4">
-                <div className="w-16">
-                  <img className="w-full" src={avatar} alt="avatar" />
+                <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center">
+                  <img
+                    className="w-full  h-full object-cover rounded-full"
+                    src={
+                      converse.other_user_profile.image
+                        ? converse.other_user_profile.image
+                        : userProfilePicDefault
+                    }
+                    alt="avatar"
+                  />
                 </div>
 
                 <div className="flex flex-col">

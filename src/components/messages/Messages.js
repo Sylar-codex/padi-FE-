@@ -166,10 +166,7 @@ function Messages({
             </div>
           )}
           <div className="bg-info-10 text-xs text-gray-90 p-4 font-semibold text-center mx-10 rounded-xl shadow-md mt-1 relative z-20">
-            <p>
-              This chat is only available for 2 days after your scheduled
-              session.
-            </p>
+            <p>This Chat is Secured</p>
           </div>
           <div
             id="scrollableDiv"
@@ -202,9 +199,15 @@ function Messages({
                         user?.username === message.from_user?.username
                           ? "flex-row"
                           : "flex-row-reverse"
-                      } justify-center items-center space-x-2`}
+                      }`}
                     >
-                      <div className="w-11/12">
+                      <div
+                        className={`w-11/12 ${
+                          user?.username === message.from_user?.username
+                            ? "mr-2"
+                            : "ml-2"
+                        }`}
+                      >
                         <p
                           className={`${
                             user?.username === message.from_user?.username

@@ -8,10 +8,13 @@ import {
   USERS_LOADING,
   USER_LOADED,
   USER_LOADING,
+  USER_PROFILE_LOADED,
+  USER_PROFILE_LOADING,
 } from "../actions/type";
 function authReducer(state, action) {
   switch (action.type) {
     case USER_LOADING:
+    case USER_PROFILE_LOADING:
       return {
         ...state,
         isLoading: true,
@@ -42,6 +45,12 @@ function authReducer(state, action) {
         ...state,
         users: action.payload,
         isLoading: false,
+      };
+    case USER_PROFILE_LOADED:
+      return {
+        ...state,
+        isLoading: false,
+        userProfile: action.payload,
       };
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:

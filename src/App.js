@@ -8,9 +8,10 @@ import useAuthState from "./hooks/authHook";
 import Conversations from "./chat/Conversations";
 
 function App() {
-  const { loadUser, auth } = useAuthState();
+  const { loadUser, auth, loadUserProfile } = useAuthState();
   useEffect(() => {
     loadUser();
+    loadUserProfile();
   }, [auth.isAuthenticated]);
   return (
     <Fragment>
