@@ -20,6 +20,8 @@ function Messages({
   conversation,
   user,
   setOtherUserprofile,
+  otherUser,
+  loadActiveConversations,
 }) {
   const [id, setId] = useState(0);
   const [newMessage, setNewMessage] = useState("");
@@ -79,6 +81,7 @@ function Messages({
       };
       const stringifyData = JSON.stringify(dataObj);
       current?.send(stringifyData);
+      loadActiveConversations();
     }
     setNewMessage("");
     clearTimeout(timeout.current);
@@ -135,8 +138,16 @@ function Messages({
           {conversation && (
             <div className="flex border-b border-gray-20 items-center justify-between p-3 bg-white ">
               <div className="flex space-x-2">
-                <div>
-                  <img src={Ravi} alt="avatar" />
+                <div className="w-12 h-12 rounded-full bg-gray-50">
+                  <img
+                    className="w-full h-full rounded-full"
+                    src={
+                      otherUser[1]?.image
+                        ? otherUser[1]?.image
+                        : userProfilePicDefault
+                    }
+                    alt="avatar"
+                  />
                 </div>
                 <div>
                   <p className="text-gray-100 font-semibold">
@@ -258,7 +269,7 @@ function Messages({
                 ref={inputRef}
               />
             </div>
-            <div
+            <button
               onClick={() => {
                 handleSubmit();
               }}
@@ -268,7 +279,7 @@ function Messages({
                 <img src={paperAirplane} alt="paper-airplane" />
               </div>
               <p>Send</p>
-            </div>
+            </button>
           </div>
         </div>
       ) : (

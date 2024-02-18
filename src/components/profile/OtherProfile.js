@@ -23,13 +23,15 @@ function OtherProfile({ setOtherUserprofile, otherUser }) {
           <div className="flex flex-col items-center">
             <div
               onClick={() => {
-                setProfilePicViewModal(true);
+                setProfilePicViewModal((prev) =>
+                  otherUser[1].image ? true : prev
+                );
               }}
               className="w-40 h-40 rounded-full hover:cursor-pointer bg-gray-70"
             >
               <img
                 className="w-full h-full object-cover rounded-full"
-                src={otherUser[1].image ? otherUser[1].image : userProfile}
+                src={otherUser[1]?.image ? otherUser[1]?.image : userProfile}
                 alt="profile pic"
               />
             </div>
@@ -41,7 +43,7 @@ function OtherProfile({ setOtherUserprofile, otherUser }) {
         </div>
         <div className="py-5 px-7 mt-3 bg-white cursor-default  text-gray-90">
           <h3 className="text-gray-80 text-lg">About</h3>
-          <p className="mt-1">{otherUser[1].description}</p>
+          <p className="mt-1">{otherUser[1]?.description}</p>
         </div>
         {/* delete chat */}
         <div className="border border-gray-10 p-5 flex items-center space-x-2 text-error-50 hover:cursor-pointer hover:opacity-70 bg-white mt-3">
@@ -49,7 +51,7 @@ function OtherProfile({ setOtherUserprofile, otherUser }) {
           <p>Delete Chat</p>
         </div>
       </div>
-      {profilePicViewModal && otherUser[1].image && (
+      {profilePicViewModal && (
         <ProfilePicView
           profilePic={otherUser[1].image}
           setProfilePicViewModal={setProfilePicViewModal}

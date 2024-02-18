@@ -100,6 +100,7 @@ const useAuthState = () => {
     try {
       dispatchAuth({ type: USERS_LOADING });
       const response = await handleApiCall("api/auth/get_all_users", "GET");
+      console.log(response.data);
       dispatchAuth({ type: USERS_LOADED, payload: response.data });
     } catch (err) {
       console.log(err);

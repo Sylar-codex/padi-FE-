@@ -5,12 +5,15 @@ import useAuthState from "../hooks/authHook";
 import Messages from "../components/messages/Messages";
 import OtherProfile from "../components/profile/OtherProfile";
 import UserProfile from "../components/profile/UserProfile";
+import NewConversation from "./NewConversation";
 
 function Chat() {
   const [id, setId] = useState(0);
   const [openUserProfile, setOpenUserProfile] = useState(false);
 
   const [otherUserProfile, setOtherUserprofile] = useState(false);
+
+  const [chatComponent, setChatComponent] = useState();
 
   const [otherUser, setOtherUser] = useState([{}]);
 
@@ -36,11 +39,16 @@ function Chat() {
   return (
     <div className="border border-gray-20 shadow-xl rounded-xl flex h-screen">
       <div className="w-2/5">
-        {openUserProfile ? (
+        {chatComponent === "user_profile" ? (
           <UserProfile
-            setOpenUserProfile={setOpenUserProfile}
+            setChatComponent={setChatComponent}
             user={user}
             userProfile={userProfile}
+          />
+        ) : chatComponent === "new_conversation" ? (
+          <NewConversation
+            setChatComponent={setChatComponent}
+            setConversationName={setConversationName}
           />
         ) : (
           <ChatPreview
@@ -52,6 +60,7 @@ function Chat() {
             loadActiveConversations={loadActiveConversations}
             activeConversations={activeConversations}
             setOtherUser={setOtherUser}
+            setChatComponent={setChatComponent}
           />
         )}
       </div>
@@ -71,6 +80,8 @@ function Chat() {
             getMessages={getMessages}
             messages={messages}
             setOtherUserprofile={setOtherUserprofile}
+            otherUser={otherUser}
+            loadActiveConversations={loadActiveConversations}
           />
         )}
       </div>

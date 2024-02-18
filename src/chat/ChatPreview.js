@@ -14,7 +14,7 @@ function ChatPreview({
   id,
   setId,
   setConversationName,
-  setOpenUserProfile,
+  setChatComponent,
   user,
   loadActiveConversations,
   activeConversations,
@@ -50,7 +50,7 @@ function ChatPreview({
           {openDropDown && (
             <DropDown
               setOpenDropDown={setOpenDropDown}
-              setOpenUserProfile={setOpenUserProfile}
+              setChatComponent={setChatComponent}
             />
           )}
         </div>
@@ -133,18 +133,30 @@ function ChatPreview({
 
 export default ChatPreview;
 
-function DropDown({ setOpenDropDown, setOpenUserProfile }) {
+// drop down
+function DropDown({ setOpenDropDown, setChatComponent }) {
   return (
-    <div className="absolute top-9 -left-20 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white py-2 px-3 space-y-2">
+    <div className="absolute top-9 -left-20 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
       <div
+        className="hover:cursor-pointer py-2 px-3 hover:bg-gray-20 rounded-t-xl"
         onClick={() => {
           setOpenDropDown(false);
-          setOpenUserProfile(true);
+          setChatComponent("user_profile");
         }}
       >
         <p>Profile</p>
       </div>
       <div
+        className="hover:cursor-pointer py-2 px-3 hover:bg-gray-20"
+        onClick={() => {
+          setOpenDropDown(false);
+          setChatComponent("new_conversation");
+        }}
+      >
+        <p>New Chat</p>
+      </div>
+      <div
+        className="hover:cursor-pointer py-2 px-3 hover:bg-gray-20 rounded-b-xl"
         onClick={() => {
           setOpenDropDown(false);
         }}

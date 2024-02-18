@@ -9,7 +9,7 @@ function PreviewImage({
   handleSubmitImage,
 }) {
   return (
-    <div className="bg-bg-modal fixed w-screen h-screen top-0 left-0 overflow-hidden">
+    <div className="bg-bg-modal fixed w-screen h-screen top-0 left-0 overflow-hidden z-30">
       <div className="lg:w-4/12 w-11/12 h-3/5 m-auto bg-white mt-28 rounded-xl relative">
         <div className="w-full h-[90%] rounded-t-xl">
           <img

@@ -9,7 +9,7 @@ import PreviewImage from "../modals/PreviewImage";
 import useAuthState from "../../hooks/authHook";
 import ProfilePicView from "../modals/ProfilePicView";
 
-function UserProfile({ setOpenUserProfile, user, userProfile }) {
+function UserProfile({ setChatComponent, user, userProfile }) {
   const [profilePic, setProfilePic] = useState(
     userProfile?.image ? userProfile.image : userProfilePicDefault
   );
@@ -38,11 +38,11 @@ function UserProfile({ setOpenUserProfile, user, userProfile }) {
     updateUserProfile(payload, userProfile.id);
   };
   return (
-    <div className="w-full h-full sticky top-0 z-10">
+    <div className="w-full h-full sticky top-0 z-30">
       <div className="flex space-x-4 items-center text-xl text-white bg-active px-5 py-4">
         <FaArrowLeft
           onClick={() => {
-            setOpenUserProfile(false);
+            setChatComponent("");
           }}
           className="hover:cursor-pointer"
         />
