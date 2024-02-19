@@ -6,6 +6,7 @@ import Messages from "../components/messages/Messages";
 import OtherProfile from "../components/profile/OtherProfile";
 import UserProfile from "../components/profile/UserProfile";
 import NewConversation from "./NewConversation";
+import useNotificationState from "../hooks/notificationHook";
 
 function Chat() {
   const [id, setId] = useState(0);
@@ -17,14 +18,12 @@ function Chat() {
 
   const [otherUser, setOtherUser] = useState([{}]);
 
-  const { auth, loadActiveConversations, activeConversations } = useAuthState();
+  const { auth } = useAuthState();
+  const { notification, loadActiveConversations } = useNotificationState();
+
+  const { activeConversations } = notification;
 
   const { user, userProfile } = auth;
-
-  useEffect(() => {
-    console.log("online-users", messages.onlineUsers);
-    userProfile && console.log("userProfile", userProfile);
-  }, []);
 
   const {
     isReady,
@@ -82,6 +81,7 @@ function Chat() {
             setOtherUserprofile={setOtherUserprofile}
             otherUser={otherUser}
             loadActiveConversations={loadActiveConversations}
+            setChatComponent={setChatComponent}
           />
         )}
       </div>

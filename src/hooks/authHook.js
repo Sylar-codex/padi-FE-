@@ -19,8 +19,6 @@ import {
 const useAuthState = () => {
   const { auth, dispatchAuth } = useContext(AuthContext);
 
-  const [activeConversations, setActiveConversations] = useState([{}]);
-
   // Register new user
   const register = async (payload) => {
     payload = JSON.stringify(payload);
@@ -106,15 +104,6 @@ const useAuthState = () => {
       console.log(err);
     }
   };
-  const loadActiveConversations = async () => {
-    try {
-      const response = await handleApiCall("api/conversations", "GET");
-      console.log(response.data);
-      setActiveConversations(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return {
     auth,
@@ -123,8 +112,6 @@ const useAuthState = () => {
     logout,
     loadUser,
     loadUsers,
-    loadActiveConversations,
-    activeConversations,
     loadUserProfile,
     updateUserProfile,
   };

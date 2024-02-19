@@ -22,6 +22,7 @@ function Messages({
   setOtherUserprofile,
   otherUser,
   loadActiveConversations,
+  setChatComponent,
 }) {
   const [id, setId] = useState(0);
   const [newMessage, setNewMessage] = useState("");
@@ -30,10 +31,6 @@ function Messages({
   const [typing, setTyping] = useState(false);
 
   const timeout = useRef();
-
-  useEffect(() => {
-    console.log("online-users", messages.onlineUsers);
-  }, []);
 
   // timeout function
   const timeoutFunction = () => {
@@ -128,7 +125,6 @@ function Messages({
       const stringifyData = JSON.stringify(dataObj);
       current?.send(stringifyData);
     }
-    console.log(isReady);
   }, [isReady]);
 
   return (
@@ -159,7 +155,7 @@ function Messages({
                         conversation.other_user?.username
                       )
                         ? " online"
-                        : "Last seen: 24 Jan, 2023 @ 9:30AM"}
+                        : "offline"}
                     </p>
                   ) : (
                     <p className="text-gray-90 text-sm italic">typing...</p>
@@ -299,6 +295,7 @@ function Messages({
             // brings out a modal containing the users contact which would be used to select
             // conversation name
             onClick={() => {
+              setChatComponent("new_conversation");
               setNewConversation(true);
             }}
             className="bg-active hover:cursor-pointer text-white rounded-full p-6 h-10 w-40 flex items-center justify-center mt-4"

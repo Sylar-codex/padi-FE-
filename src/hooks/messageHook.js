@@ -1,6 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { MessageContext } from "../contexts/MessageContext";
-import { AuthContext } from "../contexts/AuthContext";
 import { handleApiCall } from "../services/httpConfig";
 import { load_more_messages } from "../actions/type";
 
@@ -57,7 +56,6 @@ const useMessageState = () => {
     socket.onclose = () => setIsReady(false);
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      console.log(data);
       dispatchMessages({ type: data.type, payload: data });
     };
     ws.current = socket;

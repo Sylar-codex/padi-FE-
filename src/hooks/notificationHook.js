@@ -1,11 +1,25 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import { NotificationContext } from "../contexts/NotificationContext";
+import { GET_ACTIVE_CONVERSATIONS } from "../actions/type";
+import { handleApiCall } from "../services/httpConfig";
 
 const useNotificationState = () => {
   const [isReady, setIsReady] = useState(false);
 
   const { notification, dispatchNotification } =
     useContext(NotificationContext);
+
+  const loadActiveConversations = async () => {
+    try {
+      const response = await handleApiCall("api/conversations", "GET");
+      dispatchNotification({
+        type: GET_ACTIVE_CONVERSATIONS,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const token = localStorage.getItem("authToken");
 
@@ -22,10 +36,6 @@ const useNotificationState = () => {
     socket.onclose = () => setIsReady(false);
     socket.onmessage = (e) => {
       const data = JSON.parse(e.data);
-      console.log("noti", data);
-      // if (data.type === "unread_count") {
-      //   console.log("unread", data);
-      // }
       dispatchNotification({ type: data.type, payload: data });
     };
 
@@ -38,7 +48,7 @@ const useNotificationState = () => {
 
   const current = ws.current;
 
-  return { notification, current, isReady };
+  return { notification, current, isReady, loadActiveConversations };
 };
 
 export default useNotificationState;

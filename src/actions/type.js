@@ -11,6 +11,7 @@ export const USER_PROFILE_LOADING = "USER_PROFILE_LOADING";
 export const USER_PROFILE_LOADED = "USER_PROFILE_LOADED";
 export const GET_ERROR = "GET_ERROR";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";
+export const GET_ACTIVE_CONVERSATIONS = "GET_ACTIVE_CONVERSATIONS";
 
 // webocket types
 export const last_50_messages = "last_50_messages";

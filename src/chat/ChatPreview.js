@@ -3,7 +3,6 @@ import { chatPreview } from "../data/messageData";
 import avatar from "../assets/contacts-img/Ravi.svg";
 import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import { createConversation } from "../utilities/createConversation";
-import useNotificationState from "../hooks/notificationHook";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import userProfilePicDefault from "../assets/icons/user_profile.svg";
 
@@ -21,14 +20,10 @@ function ChatPreview({
   setOtherUser,
 }) {
   const [openDropDown, setOpenDropDown] = useState(false);
-  const { notification } = useNotificationState();
 
   useEffect(() => {
     loadActiveConversations();
   }, []);
-  useEffect(() => {
-    console.log("notification", notification);
-  }, [notification]);
   return (
     <div className="w-full h-full sticky top-0 z-10">
       <div className="flex justify-between p-3">
@@ -108,15 +103,20 @@ function ChatPreview({
                     {converse.other_user?.username}
                   </p>
                   <p className="text-gray-70 text-sm mt-2">
-                    {converse.last_message?.content.length < 30
-                      ? converse.last_message?.content
-                      : converse.last_message?.content.substring(0, 30) + "..."}
+                    {converse.last_message
+                      ? converse.last_message?.content.length < 30
+                        ? converse.last_message?.content
+                        : converse.last_message?.content.substring(0, 30) +
+                          "..."
+                      : ""}
                   </p>
                 </div>
               </div>
               <div className="flex flex-col items-center space-y-3">
                 <p className="text-xs text-gray-70">
-                  {formartTimeStamp(converse.last_message?.timestamp)}
+                  {converse.last_message
+                    ? formartTimeStamp(converse.last_message?.timestamp)
+                    : ""}
                 </p>
                 {converse.unread_count > 0 && (
                   <p className="flex items-center justify-center w-5 h-5 rounded-full p-1 bg-active text-white">

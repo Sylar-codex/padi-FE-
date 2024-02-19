@@ -16,7 +16,7 @@ function PasswordInput() {
       login({ username, password });
     }
     if (auth.isAuthenticated) {
-      navigate("/conversations");
+      navigate("/chat");
     }
   };
   return (

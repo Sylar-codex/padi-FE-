@@ -7,6 +7,7 @@ const { Provider } = NotificationContext;
 
 const initialState = {
   unreadMessageCount: 0,
+  activeConversations: [],
 };
 
 const NotificationProvider = ({ children }) => {
