@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import PasswordField from "../inputs/PasswordField";
 import useInputState from "../../hooks/inputHook";
 import useAuthState from "../../hooks/authHook";
@@ -7,14 +7,16 @@ import useAuthState from "../../hooks/authHook";
 function PasswordInput() {
   const navigate = useNavigate();
   const [password, setPassword] = useInputState();
-  const { login } = useAuthState();
+  const { login, auth } = useAuthState();
 
-  const username = "sylarvi";
+  const { username } = useParams();
 
   const handleSubmit = () => {
     if (password !== "") {
       login({ username, password });
-      navigate("/signup");
+    }
+    if (auth.isAuthenticated) {
+      navigate("/chat");
     }
   };
   return (
@@ -37,7 +39,7 @@ function PasswordInput() {
         </div>
         <Link
           to="/reset_password"
-          className="flex justify-center text-primary-50 mt-1 text-sm"
+          className="flex justify-center text-active mt-1 text-sm"
         >
           Forgot password?
         </Link>
@@ -58,7 +60,7 @@ function PasswordInput() {
           onClick={() => {
             handleSubmit();
           }}
-          className="bg-primary-50 text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
+          className="bg-active text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
         >
           Continue
         </button>

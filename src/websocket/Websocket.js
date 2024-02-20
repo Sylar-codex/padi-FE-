@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 function Websocket() {
   const [message, setMessage] = useState("");
-  const [username, setUsername] = useState("");
   const [messageHistory, setMessageHistory] = useState([]);
 
   const { conversationName } = useParams();
@@ -26,7 +25,7 @@ function Websocket() {
   // const { sendJsonMessage } = useWebSocket("ws://127.0.0.1:8000/");
 
   const { readyState, sendJsonMessage } = useWebSocket(
-    token ? `ws://127.0.0.1:8000/${conversationName}` : null,
+    token ? `ws://127.0.0.1:8000/${conversationName}/` : null,
     {
       queryParams: {
         token: token,
@@ -40,8 +39,11 @@ function Websocket() {
       onMessage: (e) => {
         const data = JSON.parse(e.data);
         switch (data.type) {
+          case "last_50_messages":
+            setMessageHistory(data.message);
+            break;
           case "chat_message_echo":
-            setMessageHistory(...messageHistory, data);
+            setMessageHistory((prev) => prev.concat(data.message));
             break;
           default:
             console.log("Unknown message type!");
@@ -55,9 +57,7 @@ function Websocket() {
     sendJsonMessage({
       type: "chat_message",
       message,
-      username,
     });
-    setUsername("");
     setMessage("");
   }
 
@@ -72,26 +72,7 @@ function Websocket() {
   return (
     <div>
       {connectionStatus}
-      <button
-        className="bg-gray-30 px-3 py-1"
-        onClick={() => {
-          sendJsonMessage({
-            type: "greeting",
-            message: "Hi!",
-          });
-        }}
-      >
-        Say Hi
-      </button>
-      <input
-        name="name"
-        placeholder="Name"
-        onChange={(e) => {
-          setUsername(e.target.value);
-        }}
-        value={username}
-        className="ml-2 shadow-sm sm:text-sm border border-gray-10 bg-gray-30 rounded-md"
-      />
+
       <input
         name="message"
         placeholder="Message"
@@ -102,7 +83,7 @@ function Websocket() {
         className="ml-2 shadow-sm sm:text-sm border border-gray-10 bg-gray-30 rounded-md"
       />
       <button
-        className="ml-3 bg-active text-white px-3 py-1"
+        className="ml-3 bg-active text-black px-3 py-1"
         onClick={handleSubmit}
       >
         Submit

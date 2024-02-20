@@ -9,7 +9,7 @@ function Login() {
       <h2 className="w-1/2 my-6 mx-auto text-xl font-bold">Sign In</h2>
       <Routes>
         <Route path="/username" element={<UsernameInput />} />
-        <Route path="/password" element={<PasswordInput />} />
+        <Route path="/password/:username" element={<PasswordInput />} />
       </Routes>
     </div>
   );

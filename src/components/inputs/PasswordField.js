@@ -15,8 +15,8 @@ function PasswordField({
   return (
     <div
       className={`w-full border ${
-        showOutline ? "border-primary-50" : "border-gray-30"
-      }  h-14 relative flex rounded-lg outline-primary-50 outline-1 ${
+        showOutline ? "border-active" : "border-gray-30"
+      }  h-14 relative flex rounded-lg outline-active outline-1 ${
         showOutline ? "outline" : ""
       }`}
     >
@@ -24,7 +24,7 @@ function PasswordField({
         {value?.length > 0 && (
           <label
             htmlFor={id}
-            className="text-xs text-primary-50 absolute bg-white p-px -top-2 left-3"
+            className="text-xs text-active absolute bg-white p-px -top-2 left-3"
           >
             {label}
           </label>
