@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import coacheeProfile from "../../assets/images/Avatar2.svg";
-import Ravi from "../../assets/contacts-img/Ravi.svg";
 import paperAirplane from "../../assets/icons/paper-airplane.svg";
 import hourGlass from "../../assets/icons/hour-glass.svg";
-import useMessageState from "../../hooks/messageHook";
-import useAuthState from "../../hooks/authHook";
 import { formartTimeStamp } from "../../utilities/formartTimeStamp";
 import InfiniteScroll from "react-infinite-scroll-component";
 import ChatLoader from "../utility-component/ChatLoader";
@@ -136,7 +132,7 @@ function Messages({
               <div className="flex space-x-2">
                 <div className="w-12 h-12 rounded-full bg-gray-50">
                   <img
-                    className="w-full h-full rounded-full"
+                    className="w-full h-full rounded-full object-cover"
                     src={
                       otherUser[1]?.image
                         ? otherUser[1]?.image

@@ -32,9 +32,13 @@ function UserProfile({ setChatComponent, user, userProfile }) {
     const payload = { description: value };
     updateUserProfile(payload, userProfile.id);
   };
-
   const handleSubmitImage = () => {
     const payload = { image: tempPhoto };
+    updateUserProfile(payload, userProfile.id);
+  };
+
+  const handleRemoveImage = () => {
+    const payload = { remove_image: true };
     updateUserProfile(payload, userProfile.id);
   };
   return (
@@ -72,6 +76,8 @@ function UserProfile({ setChatComponent, user, userProfile }) {
                   setImagePreview={setImagePreview}
                   setProfilePicViewModal={setProfilePicViewModal}
                   userProfile={userProfile}
+                  handleRemoveImage={handleRemoveImage}
+                  setProfilePic={setProfilePic}
                 />
               )}
             </div>
@@ -138,6 +144,7 @@ function UserProfile({ setChatComponent, user, userProfile }) {
           setImagePreview={setImagePreview}
           setProfilePic={setProfilePic}
           handleSubmitImage={handleSubmitImage}
+          setTempPhoto={setTempPhoto}
         />
       )}
       {profilePicViewModal && (
@@ -158,6 +165,8 @@ function DropDown({
   setTempPhoto,
   setProfilePicViewModal,
   userProfile,
+  handleRemoveImage,
+  setProfilePic,
 }) {
   return (
     <div className="absolute top-16 left-24 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
@@ -176,6 +185,8 @@ function DropDown({
           <div
             className="hover:bg-gray-20 py-2 px-2"
             onClick={() => {
+              setProfilePic(userProfilePicDefault);
+              handleRemoveImage();
               setOpenDropDown(false);
             }}
           >

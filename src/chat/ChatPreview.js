@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { chatPreview } from "../data/messageData";
-import avatar from "../assets/contacts-img/Ravi.svg";
 import { formartTimeStamp } from "../utilities/formartTimeStamp";
 import { createConversation } from "../utilities/createConversation";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -18,6 +16,7 @@ function ChatPreview({
   loadActiveConversations,
   activeConversations,
   setOtherUser,
+  logout,
 }) {
   const [openDropDown, setOpenDropDown] = useState(false);
 
@@ -46,6 +45,7 @@ function ChatPreview({
             <DropDown
               setOpenDropDown={setOpenDropDown}
               setChatComponent={setChatComponent}
+              logout={logout}
             />
           )}
         </div>
@@ -134,7 +134,7 @@ function ChatPreview({
 export default ChatPreview;
 
 // drop down
-function DropDown({ setOpenDropDown, setChatComponent }) {
+function DropDown({ setOpenDropDown, setChatComponent, logout }) {
   return (
     <div className="absolute top-9 -left-20 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
       <div
@@ -159,6 +159,7 @@ function DropDown({ setOpenDropDown, setChatComponent }) {
         className="hover:cursor-pointer py-2 px-3 hover:bg-gray-20 rounded-b-xl"
         onClick={() => {
           setOpenDropDown(false);
+          logout();
         }}
       >
         <p className="text-error-50"> Logout</p>

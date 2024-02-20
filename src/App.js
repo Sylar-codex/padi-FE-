@@ -5,7 +5,7 @@ import Signup from "./accounts/Signup";
 import Login from "./accounts/Login";
 import Chat from "./chat/Chat";
 import useAuthState from "./hooks/authHook";
-import Conversations from "./chat/Conversations";
+import PrivateRoutes from "./common/PrivateRoutes";
 
 function App() {
   const { loadUser, auth, loadUserProfile } = useAuthState();
@@ -19,7 +19,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login/*" element={<Login />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/conversations" element={<Conversations />} />
+        <Route element={<PrivateRoutes />}></Route>
       </Routes>
     </Fragment>
   );

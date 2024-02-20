@@ -45,12 +45,14 @@ function authReducer(state, action) {
         ...state,
         users: action.payload,
         isLoading: false,
+        isAuthenticated: true,
       };
     case USER_PROFILE_LOADED:
       return {
         ...state,
         isLoading: false,
         userProfile: action.payload,
+        isAuthenticated: true,
       };
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:

@@ -7,6 +7,7 @@ function PreviewImage({
   setImagePreview,
   setProfilePic,
   handleSubmitImage,
+  setTempPhoto,
 }) {
   return (
     <div className="bg-bg-modal fixed w-screen h-screen top-0 left-0 overflow-hidden z-30">
@@ -23,6 +24,7 @@ function PreviewImage({
             onClick={() => {
               // URL.revokeObjectURL(imagePreview);
               setImagePreview(null);
+              setTempPhoto(null);
             }}
             className="bg-error-50 text-white w-1/2 flex justify-center items-center"
           >
