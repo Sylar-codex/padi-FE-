@@ -4,6 +4,7 @@ import useAuthState from "../hooks/authHook";
 
 const PrivateRoutes = () => {
   const { auth } = useAuthState();
+
   if (auth.isLoading) {
     return <h2>Loading...</h2>;
   } else if (!auth.isAuthenticated) {

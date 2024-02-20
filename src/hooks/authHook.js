@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { handleApiCall, handleApiCallFormData } from "../services/httpConfig";
 import {
+  AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
@@ -64,6 +65,7 @@ const useAuthState = () => {
       const response = await handleApiCall("api/auth/user", "GET");
       dispatchAuth({ type: USER_LOADED, payload: response.data });
     } catch (err) {
+      dispatchAuth({ type: AUTH_ERROR });
       console.log(err);
     }
   };
@@ -98,7 +100,6 @@ const useAuthState = () => {
     try {
       dispatchAuth({ type: USERS_LOADING });
       const response = await handleApiCall("api/auth/get_all_users", "GET");
-      console.log(response.data);
       dispatchAuth({ type: USERS_LOADED, payload: response.data });
     } catch (err) {
       console.log(err);

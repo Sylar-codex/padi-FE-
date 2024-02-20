@@ -1,4 +1,5 @@
 import {
+  AUTH_ERROR,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
@@ -57,6 +58,7 @@ function authReducer(state, action) {
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
     case LOGIN_FAIL:
+    case AUTH_ERROR:
       localStorage.removeItem("authToken");
       return {
         ...state,
