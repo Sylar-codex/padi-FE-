@@ -113,9 +113,11 @@ function ChatPreview({
                 </div>
               </div>
               <div className="flex flex-col items-center space-y-3">
-                <p className="text-xs text-gray-70">
+                <p className="text-sm text-gray-70">
                   {converse.last_message
-                    ? formartTimeStamp(converse.last_message?.timestamp)
+                    ? formartTimeStamp(converse.last_message?.timestamp).split(
+                        " "
+                      )[0]
                     : ""}
                 </p>
                 {converse.unread_count > 0 && (

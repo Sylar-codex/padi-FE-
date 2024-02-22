@@ -189,10 +189,10 @@ function Messages({
                 scrollableTarget="scrollableDiv"
               >
                 {/* sender */}
-                {messages.messages.map((message) => (
+                {messages.messages.map((message, ind) => (
                   <div
                     key={message.id}
-                    className={`flex ${
+                    className={`flex ${ind != 0 && "mt-1"} ${
                       user?.username === message.from_user?.username
                         ? "justify-end"
                         : "justify-start"
