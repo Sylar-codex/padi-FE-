@@ -21,7 +21,6 @@ const useMessageState = () => {
       );
       dispatchMessages({ type: load_more_messages, payload: response.data });
       setPage((prev) => prev + 1);
-      console.log(page);
     } catch (err) {
       console.log(err);
     }
