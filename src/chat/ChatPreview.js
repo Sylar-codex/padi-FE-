@@ -17,6 +17,7 @@ function ChatPreview({
   activeConversations,
   setOtherUser,
   logout,
+  setPage,
 }) {
   const [openDropDown, setOpenDropDown] = useState(false);
 
@@ -78,6 +79,7 @@ function ChatPreview({
                   converse.other_user,
                   converse.other_user_profile,
                 ]);
+                setPage(2);
                 setId(converse.id);
               }}
               className={`flex justify-between border-b-2 border-gray-5 rounded-xl py-3 px-2 ${
