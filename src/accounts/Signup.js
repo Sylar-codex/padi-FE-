@@ -3,7 +3,7 @@ import SignupAuth from "../components/Auth/SignupAuth";
 import PasswordSet from "../components/Auth/PasswordSet";
 import useInputState from "../hooks/inputHook";
 import useAuthState from "../hooks/authHook";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const [steps, setSteps] = useState(0);
@@ -30,9 +30,15 @@ function Signup() {
 
   return (
     <div className="m-auto w-1/2 pt-72 pb-44 relative">
-      <h2 className="w-1/2 my-6 mx-auto text-xl font-semibold">
+      <h2 className="w-1/2 my-4 mx-auto text-xl font-semibold">
         {steps === 0 ? "Sign Up" : "Provide Your Password"}
       </h2>
+      <p className="text-gray-70 w-1/2 my-2 mx-auto">
+        Already a member?{" "}
+        <Link className="text-active" to="/login/username">
+          Sign In
+        </Link>
+      </p>
       {steps === 0 ? (
         <SignupAuth
           email={email}
