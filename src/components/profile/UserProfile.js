@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { AiOutlineExclamationCircle, AiOutlineMail } from "react-icons/ai";
 import { FaArrowLeft } from "react-icons/fa6";
 import userProfilePicDefault from "../../assets/icons/user_profile.svg";
@@ -8,12 +8,16 @@ import { IoPencilOutline, IoCheckmark } from "react-icons/io5";
 import PreviewImage from "../modals/PreviewImage";
 import useAuthState from "../../hooks/authHook";
 import ProfilePicView from "../modals/ProfilePicView";
+import { createMessageAlert } from "../../actions/messages";
+import { MessageAlertContext } from "../../contexts/MessageAlertContext";
 
 function UserProfile({ setChatComponent, user, userProfile }) {
   const [profilePic, setProfilePic] = useState(
     userProfile?.image ? userProfile.image : userProfilePicDefault
   );
   const [tempPhoto, setTempPhoto] = useState(null);
+
+  const { dispatchMessageAlert } = useContext(MessageAlertContext);
 
   const [openDropDown, setOpenDropDown] = useState(false);
   const [editDesc, setEditDesc] = useState(false);

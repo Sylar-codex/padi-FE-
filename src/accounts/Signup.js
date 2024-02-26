@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import SignupAuth from "../components/Auth/SignupAuth";
 import PasswordSet from "../components/Auth/PasswordSet";
 import useInputState from "../hooks/inputHook";
 import useAuthState from "../hooks/authHook";
 import { Link, useNavigate } from "react-router-dom";
+import { MessageAlertContext } from "../contexts/MessageAlertContext";
+import { createMessageAlert } from "../actions/messages";
 
 function Signup() {
   const [steps, setSteps] = useState(0);
+
+  const { dispatchMessageAlert } = useContext(MessageAlertContext);
 
   const { register, auth } = useAuthState();
   const [email, setEmail] = useInputState("");
@@ -21,6 +25,10 @@ function Signup() {
       if (password === passwordConfirm) {
         const payload = { email, username, password };
         register(payload);
+      } else {
+        dispatchMessageAlert(
+          createMessageAlert({ passwordNotMatch: "Password does not match" })
+        );
       }
       if (auth.isAuthenticated) {
         navigate("/chat");

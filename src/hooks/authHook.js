@@ -1,5 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { ErrorContext } from "../contexts/ErrorContext";
+import { returnError, createMessageAlert } from "../actions/messages";
 import { handleApiCall, handleApiCallFormData } from "../services/httpConfig";
 import {
   AUTH_ERROR,
@@ -15,10 +17,13 @@ import {
   USER_PROFILE_LOADED,
   USER_PROFILE_LOADING,
 } from "../actions/type";
+import { MessageAlertContext } from "../contexts/MessageAlertContext";
 // import { returnError } from "../actions/messages";
 
 const useAuthState = () => {
   const { auth, dispatchAuth } = useContext(AuthContext);
+  const { dispatchError } = useContext(ErrorContext);
+  const { dispatchMessageAlert } = useContext(MessageAlertContext);
 
   // Register new user
   const register = async (payload) => {
@@ -29,11 +34,10 @@ const useAuthState = () => {
         "POST",
         payload
       );
-      console.log("success");
       dispatchAuth({ type: REGISTER_SUCCESS, payload: response.data });
     } catch (err) {
       dispatchAuth({ type: REGISTER_FAIL });
-      console.log(err);
+      dispatchError(returnError(err.response.data, err.response.status));
     }
   };
 
@@ -44,8 +48,8 @@ const useAuthState = () => {
       const response = await handleApiCall("api/auth/login", "POST", payload);
       dispatchAuth({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (err) {
-      console.log(err);
       dispatchAuth({ type: LOGIN_FAIL });
+      dispatchError(returnError(err.response.data, err.response.status));
     }
   };
 
@@ -55,7 +59,7 @@ const useAuthState = () => {
       const response = await handleApiCall("api/auth/logout", "POST", null);
       dispatchAuth({ type: LOGOUT_SUCCESS });
     } catch (err) {
-      console.log(err);
+      dispatchError(returnError(err.response.data, err.response.status));
     }
   };
   //  get logged in user
@@ -83,6 +87,17 @@ const useAuthState = () => {
 
   // update user profile
   const updateUserProfile = async (payload, id) => {
+    const alertData = () => {
+      if (payload.description) {
+        return "Updated About";
+      }
+      if (payload.image) {
+        return "Uploaded Profile Picture";
+      }
+      if (payload.remove_image) {
+        return "Removed Profile Picture";
+      }
+    };
     try {
       const response = await handleApiCallFormData(
         `api/update/user_profile/${id}/`,
@@ -90,6 +105,7 @@ const useAuthState = () => {
         payload
       );
       dispatchAuth({ type: USER_PROFILE_LOADED, payload: response.data });
+      dispatchMessageAlert(createMessageAlert({ updateProfile: alertData() }));
     } catch (err) {
       console.log(err);
     }
