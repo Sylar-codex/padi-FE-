@@ -13,6 +13,8 @@ export const AUTH_ERROR = "AUTH_ERROR";
 export const GET_ERROR = "GET_ERROR";
 export const CREATE_MESSAGE_ALERT = "CREATE_MESSAGE_ALERT";
 export const GET_ACTIVE_CONVERSATIONS = "GET_ACTIVE_CONVERSATIONS";
+export const FORM_SUBMISSION = "FORM_SUBMISSION";
+export const SUBMISSION_SUCCESS = "SUBMISSION_SUCCESS";
 
 // webocket types
 export const last_50_messages = "last_50_messages";

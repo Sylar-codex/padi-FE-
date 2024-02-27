@@ -3,7 +3,7 @@ import SignupAuth from "../components/Auth/SignupAuth";
 import PasswordSet from "../components/Auth/PasswordSet";
 import useInputState from "../hooks/inputHook";
 import useAuthState from "../hooks/authHook";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { MessageAlertContext } from "../contexts/MessageAlertContext";
 import { createMessageAlert } from "../actions/messages";
 
@@ -18,23 +18,24 @@ function Signup() {
   const [password, setPassword] = useInputState("");
   const [passwordConfirm, setPasswordConfirm] = useInputState("");
 
-  const navigate = useNavigate();
-
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (password !== "" && passwordConfirm !== "") {
       if (password === passwordConfirm) {
-        const payload = { email, username, password };
+        email.toLowerCase();
+        const payload = { email: email.toLowerCase(), username, password };
         register(payload);
       } else {
         dispatchMessageAlert(
           createMessageAlert({ passwordNotMatch: "Password does not match" })
         );
       }
-      if (auth.isAuthenticated) {
-        navigate("/chat");
-      }
     }
   };
+
+  if (auth.isAuthenticated) {
+    return <Navigate to="/chat" />;
+  }
 
   return (
     <div className="m-auto w-1/2 pt-72 pb-44 relative">
@@ -63,6 +64,7 @@ function Signup() {
           setPasswordConfirm={setPasswordConfirm}
           setSteps={setSteps}
           handleSubmit={handleSubmit}
+          auth={auth}
         />
       )}
     </div>

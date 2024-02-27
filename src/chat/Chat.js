@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useMessageState from "../hooks/messageHook";
 import ChatPreview from "./ChatPreview";
 import useAuthState from "../hooks/authHook";
@@ -22,8 +22,12 @@ function Chat() {
 
   const { activeConversations } = notification;
 
-  const { auth, logout } = useAuthState();
+  const { auth, logout, loadUsers } = useAuthState();
   const { user, userProfile } = auth;
+
+  // useEffect(() => {
+  //   loadUsers();
+  // }, []);
 
   const {
     isReady,

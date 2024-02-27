@@ -5,6 +5,7 @@ import { returnError, createMessageAlert } from "../actions/messages";
 import { handleApiCall, handleApiCallFormData } from "../services/httpConfig";
 import {
   AUTH_ERROR,
+  FORM_SUBMISSION,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
@@ -18,7 +19,6 @@ import {
   USER_PROFILE_LOADING,
 } from "../actions/type";
 import { MessageAlertContext } from "../contexts/MessageAlertContext";
-// import { returnError } from "../actions/messages";
 
 const useAuthState = () => {
   const { auth, dispatchAuth } = useContext(AuthContext);
@@ -27,6 +27,8 @@ const useAuthState = () => {
 
   // Register new user
   const register = async (payload) => {
+    dispatchAuth({ type: FORM_SUBMISSION });
+
     payload = JSON.stringify(payload);
     try {
       const response = await handleApiCall(
@@ -45,6 +47,8 @@ const useAuthState = () => {
   const login = async (payload) => {
     try {
       dispatchAuth({ type: USER_LOADING });
+      dispatchAuth({ type: FORM_SUBMISSION });
+
       const response = await handleApiCall("api/auth/login", "POST", payload);
       dispatchAuth({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (err) {

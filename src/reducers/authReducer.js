@@ -1,10 +1,12 @@
 import {
   AUTH_ERROR,
+  FORM_SUBMISSION,
   LOGIN_FAIL,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_FAIL,
   REGISTER_SUCCESS,
+  SUBMISSION_SUCCESS,
   USERS_LOADED,
   USERS_LOADING,
   USER_LOADED,
@@ -25,7 +27,18 @@ function authReducer(state, action) {
         ...state,
         isLoading: false,
         isAuthenticated: true,
+        isSubmitting: false,
         user: action.payload,
+      };
+    case FORM_SUBMISSION:
+      return {
+        ...state,
+        isSubmitting: true,
+      };
+    case SUBMISSION_SUCCESS:
+      return {
+        ...state,
+        isSubmitting: false,
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -35,6 +48,7 @@ function authReducer(state, action) {
         ...action.payload,
         isAuthenticated: true,
         isLoading: false,
+        isSubmitting: false,
       };
     case USERS_LOADING:
       return {
@@ -66,6 +80,7 @@ function authReducer(state, action) {
         user: null,
         users: null,
         isAuthenticated: false,
+        isSubmitting: false,
       };
 
     default:
