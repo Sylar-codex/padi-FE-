@@ -1,8 +1,9 @@
 import React from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link, useParams, Navigate } from "react-router-dom";
 import PasswordField from "../inputs/PasswordField";
 import useInputState from "../../hooks/inputHook";
 import useAuthState from "../../hooks/authHook";
+import ButtonSpinner from "../../utilities/ButtonSpinner";
 
 function PasswordInput() {
   const navigate = useNavigate();
@@ -15,10 +16,10 @@ function PasswordInput() {
     if (password !== "") {
       login({ username, password });
     }
-    if (auth.isAuthenticated) {
-      navigate("/chat");
-    }
   };
+  if (auth.isAuthenticated) {
+    return <Navigate to="/chat" />;
+  }
   return (
     <div>
       <div className="w-1/2 mx-auto">
@@ -60,9 +61,11 @@ function PasswordInput() {
           onClick={() => {
             handleSubmit();
           }}
-          className="bg-active text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
+          className={`${
+            auth.isSubmitting ? "bg-inactive" : "bg-active"
+          } text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center`}
         >
-          Continue
+          {auth.isSubmitting ? <ButtonSpinner /> : "Sign In"}
         </button>
       </div>
     </div>

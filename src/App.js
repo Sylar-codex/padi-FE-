@@ -10,10 +10,11 @@ import HomeRedirect from "./layouts/HomeRedirect";
 import Alert from "./layouts/Alert";
 
 function App() {
-  const { loadUser, auth, loadUserProfile } = useAuthState();
+  const { loadUser, auth, loadUserProfile, loadUsers } = useAuthState();
   useEffect(() => {
     loadUser();
     loadUserProfile();
+    loadUsers();
   }, [auth.isAuthenticated]);
   return (
     <Fragment>

@@ -7,16 +7,14 @@ function NewConversation({ setChatComponent, setConversationName }) {
   const [value, setValue] = useState("");
   const [lookedUpUsers, setLookedUpUsers] = useState([]);
 
-  const { auth, loadUsers } = useAuthState();
+  const { auth } = useAuthState();
   const { user, users } = auth;
 
   useEffect(() => {
-    loadUsers();
-  }, []);
-
-  useEffect(() => {
     const filterUser = users.filter(
-      (user) => value.toLowerCase() === user.email
+      (lookedUpUser) =>
+        value.toLowerCase() === lookedUpUser.email &&
+        lookedUpUser.email !== user.email
     );
     console.log(filterUser);
     setLookedUpUsers(filterUser);

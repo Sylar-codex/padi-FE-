@@ -1,5 +1,6 @@
 import React from "react";
 import PasswordField from "../inputs/PasswordField";
+import ButtonSpinner from "../../utilities/ButtonSpinner";
 
 function PasswordSet({
   setSteps,
@@ -8,9 +9,10 @@ function PasswordSet({
   passwordConfirm,
   setPasswordConfirm,
   handleSubmit,
+  auth,
 }) {
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <div className="w-1/2 mx-auto space-y-4">
         {/* username input */}
         <PasswordField
@@ -44,15 +46,16 @@ function PasswordSet({
       </div>
       <div className="flex justify-center mt-8">
         <button
-          onClick={() => {
-            handleSubmit();
-          }}
-          className="bg-active text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center"
+          type="submit"
+          disabled={auth.isSubmitting ? true : false}
+          className={`${
+            auth.isSubmitting ? "bg-inactive" : "bg-active"
+          } text-white rounded-lg w-1/2 h-14 p-3 flex justify-center items-center`}
         >
-          Sign Up
+          {auth.isSubmitting ? <ButtonSpinner /> : "Sign Up"}
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
