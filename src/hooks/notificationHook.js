@@ -26,7 +26,7 @@ const useNotificationState = () => {
   const ws = useRef(null);
 
   const url = token
-    ? `ws://127.0.0.1:8000/notifications/?token=${token}`
+    ? `${process.env.REACT_APP_WEBSOCKET_URL}/notifications/?token=${token}`
     : null;
 
   useEffect(() => {
