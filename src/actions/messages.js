@@ -1,8 +1,8 @@
-import { CREATE_MESSAGE, GET_ERROR } from "./type";
+import { CREATE_MESSAGE_ALERT, GET_ERROR } from "./type";
 
-const createMessage = (msg) => {
+const createMessageAlert = (msg) => {
   return {
-    type: CREATE_MESSAGE,
+    type: CREATE_MESSAGE_ALERT,
     payload: msg,
   };
 };
@@ -12,4 +12,4 @@ const returnError = (msg, status) => {
     payload: { msg, status },
   };
 };
-export { createMessage, returnError };
+export { createMessageAlert, returnError };

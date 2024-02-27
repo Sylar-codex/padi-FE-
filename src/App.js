@@ -7,16 +7,17 @@ import Chat from "./chat/Chat";
 import useAuthState from "./hooks/authHook";
 import PrivateRoutes from "./common/PrivateRoutes";
 import HomeRedirect from "./layouts/HomeRedirect";
+import Alert from "./layouts/Alert";
 
 function App() {
   const { loadUser, auth, loadUserProfile } = useAuthState();
   useEffect(() => {
     loadUser();
     loadUserProfile();
-    console.log(auth.isAuthenticated);
   }, [auth.isAuthenticated]);
   return (
     <Fragment>
+      <Alert />
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login/*" element={<Login />} />

@@ -7,17 +7,27 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { MessageProvider } from "./contexts/MessageContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
+import { MessageAlertProvider } from "./contexts/MessageAlertContext";
+import { ErrorProvider } from "./contexts/ErrorContext";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthProvider>
-    <NotificationProvider>
-      <MessageProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </MessageProvider>
-    </NotificationProvider>
-  </AuthProvider>
+  <MessageAlertProvider>
+    <ErrorProvider>
+      <AuthProvider>
+        <NotificationProvider>
+          <MessageProvider>
+            <BrowserRouter>
+              <App />
+              <ToastContainer position="top-center" />
+            </BrowserRouter>
+          </MessageProvider>
+        </NotificationProvider>
+      </AuthProvider>
+    </ErrorProvider>
+  </MessageAlertProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

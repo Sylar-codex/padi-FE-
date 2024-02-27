@@ -46,7 +46,7 @@ const useMessageState = () => {
   const token = localStorage.getItem("authToken");
 
   const url = token
-    ? `ws://127.0.0.1:8000/${conversationName}/?token=${token}`
+    ? `${process.env.REACT_APP_WEBSOCKET_URL}/${conversationName}/?token=${token}`
     : null;
 
   useEffect(() => {
@@ -75,6 +75,7 @@ const useMessageState = () => {
     getMessages,
     current,
     conversation,
+    setPage,
   };
 };
 

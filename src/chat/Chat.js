@@ -33,6 +33,7 @@ function Chat() {
     getMessages,
     current,
     conversation,
+    setPage,
   } = useMessageState();
 
   return (
@@ -61,6 +62,7 @@ function Chat() {
             setOtherUser={setOtherUser}
             setChatComponent={setChatComponent}
             logout={logout}
+            setPage={setPage}
           />
         )}
       </div>

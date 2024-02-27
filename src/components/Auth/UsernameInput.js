@@ -1,15 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import useinputState from "../../hooks/inputHook";
 import { useNavigate } from "react-router-dom";
 import InputField from "../inputs/InputField";
+import { createMessageAlert } from "../../actions/messages";
+import { MessageAlertContext } from "../../contexts/MessageAlertContext";
 
 function UsernameInput() {
+  const { dispatchMessageAlert } = useContext(MessageAlertContext);
+
   const [username, setUsername] = useinputState("");
   const navigate = useNavigate();
 
   const handleSubmit = () => {
     if (username !== "") {
       navigate(`/login/password/${username}`);
+    } else {
+      dispatchMessageAlert(
+        createMessageAlert({ cannotBeBlank: "This field cannot be blank" })
+      );
     }
   };
 
