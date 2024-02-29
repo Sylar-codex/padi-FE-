@@ -6,7 +6,7 @@ const PrivateRoutes = () => {
   const { auth } = useAuthState();
 
   if (auth.isLoading) {
-    return <h2>Loading...</h2>;
+    return <h2>Please wait for some second...</h2>;
   } else if (!auth.isAuthenticated) {
     return <Navigate to="/login/username" />;
   } else {
