@@ -11,6 +11,7 @@ import useNotificationState from "../hooks/notificationHook";
 function Chat() {
   const [id, setId] = useState(0);
   const [openUserProfile, setOpenUserProfile] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const [otherUserProfile, setOtherUserprofile] = useState(false);
 
@@ -41,8 +42,12 @@ function Chat() {
   } = useMessageState();
 
   return (
-    <div className="border border-gray-20 shadow-xl rounded-xl flex h-screen">
-      <div className="w-2/5">
+    <div className="border border-gray-20 shadow-xl rounded-xl flex h-screen w-full">
+      <div
+        className={`lg:w-2/5 w-full h-full overflow-y-scroll bg-white ${
+          isChatOpen ? "-left-full" : "left-0"
+        } z-40 lg:static fixed`}
+      >
         {chatComponent === "user_profile" ? (
           <UserProfile
             setChatComponent={setChatComponent}
@@ -67,10 +72,11 @@ function Chat() {
             setChatComponent={setChatComponent}
             logout={logout}
             setPage={setPage}
+            setIsChatOpen={setIsChatOpen}
           />
         )}
       </div>
-      <div className="w-3/5">
+      <div className={"lg:w-3/5 w-full"}>
         {otherUserProfile ? (
           <OtherProfile
             setOtherUserprofile={setOtherUserprofile}
@@ -89,6 +95,7 @@ function Chat() {
             otherUser={otherUser}
             loadActiveConversations={loadActiveConversations}
             setChatComponent={setChatComponent}
+            setIsChatOpen={setIsChatOpen}
           />
         )}
       </div>

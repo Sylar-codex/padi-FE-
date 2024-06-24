@@ -5,7 +5,7 @@ import PasswordInput from "../components/Auth/PasswordInput";
 
 function Login() {
   return (
-    <div className="m-auto w-1/2 pt-72 pb-44 relative">
+    <div className="m-auto lg:w-1/2 w-full pt-72 pb-44 relative">
       <h2 className="w-1/2 my-4 mx-auto text-xl font-bold">Sign In</h2>
       <p className="text-gray-70 w-1/2 my-2 mx-auto">
         Not a member yet?{" "}

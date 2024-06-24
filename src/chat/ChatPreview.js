@@ -18,6 +18,7 @@ function ChatPreview({
   setOtherUser,
   logout,
   setPage,
+  setIsChatOpen,
 }) {
   const [openDropDown, setOpenDropDown] = useState(false);
 
@@ -81,6 +82,7 @@ function ChatPreview({
                 ]);
                 setPage(2);
                 setId(converse.id);
+                setIsChatOpen(true);
               }}
               className={`flex justify-between border-b-2 border-gray-5 rounded-xl py-3 px-2 ${
                 id === converse.id ? "bg-gray-20" : "bg-white"
