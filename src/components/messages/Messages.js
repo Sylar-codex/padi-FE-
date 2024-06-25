@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import ChatLoader from "../utility-component/ChatLoader";
 import { useHotkeys } from "react-hotkeys-hook";
 import userProfilePicDefault from "../../assets/icons/user_profile.svg";
+import { FaAngleLeft } from "react-icons/fa";
 
 function Messages({
   isReady,
@@ -19,6 +20,7 @@ function Messages({
   otherUser,
   loadActiveConversations,
   setChatComponent,
+  setIsChatOpen,
 }) {
   const [id, setId] = useState(0);
   const [newMessage, setNewMessage] = useState("");
@@ -129,7 +131,13 @@ function Messages({
         <div className="relative h-full bg-gray-5 ">
           {conversation && (
             <div className="flex border-b border-gray-20 items-center justify-between p-3 bg-white ">
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 items-center">
+                <FaAngleLeft
+                  onClick={() => {
+                    setIsChatOpen(false);
+                  }}
+                  className={`text-xl hover:cursor-pointer lg:hidden block`}
+                />
                 <div className="w-12 h-12 rounded-full bg-gray-50">
                   <img
                     className="w-full h-full rounded-full object-cover"

@@ -38,7 +38,7 @@ function Signup() {
   }
 
   return (
-    <div className="m-auto w-1/2 pt-72 pb-44 relative">
+    <div className="m-auto lg:w-1/2 w-full pt-72 pb-44 relative">
       <h2 className="w-1/2 my-4 mx-auto text-xl font-semibold">
         {steps === 0 ? "Sign Up" : "Provide Your Password"}
       </h2>

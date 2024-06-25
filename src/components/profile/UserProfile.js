@@ -173,7 +173,7 @@ function DropDown({
   setProfilePic,
 }) {
   return (
-    <div className="absolute top-16 left-24 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
+    <div className="absolute top-24 left-14 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
       {userProfile?.image && (
         <div>
           <div
