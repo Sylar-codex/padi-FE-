@@ -182,7 +182,7 @@ function Messages({
           </div>
           <div
             id="scrollableDiv"
-            className={`p-4 h-3/4 overflow-y-auto relative flex ${
+            className={`p-4 h-3/4 overflow-y-auto  relative flex ${
               messages.messages.length >= 10 ? "flex-col-reverse" : "flex-col"
             }`}
           >
@@ -200,21 +200,23 @@ function Messages({
                 {messages.messages.map((message, ind) => (
                   <div
                     key={message.id}
-                    className={`flex ${ind != 0 && "mt-1"} ${
+                    className={`flex w-full overflow-x-hidden ${
+                      ind != 0 && "mt-1"
+                    } ${
                       user?.username === message.from_user?.username
                         ? "justify-end"
                         : "justify-start"
                     }`}
                   >
                     <div
-                      className={`w-2/3 flex ${
+                      className={`w-4/5 flex ${
                         user?.username === message.from_user?.username
                           ? "flex-row"
                           : "flex-row-reverse"
                       }`}
                     >
                       <div
-                        className={`w-11/12 ${
+                        className={`w-10/12 ${
                           user?.username === message.from_user?.username
                             ? "mr-2"
                             : "ml-2"
@@ -223,9 +225,9 @@ function Messages({
                         <p
                           className={`${
                             user?.username === message.from_user?.username
-                              ? "bg-primary-50 py-3 px-5 text-gray-90 rounded-lg"
-                              : "bg-gray-20 py-3 px-5 text-gray-90 rounded-lg"
-                          }`}
+                              ? "bg-primary-50"
+                              : "bg-gray-20"
+                          } py-3 px-5 text-gray-90 rounded-lg`}
                         >
                           {message.content}
                         </p>
@@ -233,8 +235,8 @@ function Messages({
                           {formartTimeStamp(message.timestamp)}
                         </p>
                       </div>
-                      <div className="w w-1/12">
-                        <div className="w-10 h-10 rounded-full bg-gray-50">
+                      <div className="w-2/12">
+                        <div className="w-12 h-12 rounded-full bg-gray-50">
                           <img
                             className="w-full h-full rounded-full object-cover"
                             src={

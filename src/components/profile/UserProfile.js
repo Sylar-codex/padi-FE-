@@ -118,10 +118,8 @@ function UserProfile({ setChatComponent, user, userProfile }) {
                 {editDesc ? (
                   <IoCheckmark
                     onClick={() => {
-                      {
-                        setEditDesc(false);
-                        handleSubmit();
-                      }
+                      setEditDesc(false);
+                      handleSubmit();
                     }}
                     className="hover:cursor-pointer text-xl"
                   />
@@ -173,7 +171,7 @@ function DropDown({
   setProfilePic,
 }) {
   return (
-    <div className="absolute top-24 left-14 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
+    <div className="absolute top-24 left-10 w-32 hover:cursor-pointer rounded-xl border-gray-40 shadow-lg text-gray-90 z-50 bg-white">
       {userProfile?.image && (
         <div>
           <div
